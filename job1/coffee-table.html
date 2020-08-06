@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>咖啡（table）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      table {
+        width: 100vw;
+      }
+
+      .header {
+        height: 80px;
+      }
+
+      .header_content {
+        text-align: center;
+        background-color: rgba(125, 255, 223);
+      }
+
+      .header_content h1 {
+        align-items: center;
+      }
+
+      .header_content img {
+        width: 40px;
+        height: 40px;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+
+      .middle_left {
+        float: left;
+        width: 100%;
+        height: 100%;
+      }
+
+      .middle_left ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        text-indent: 2em;
+      }
+
+      .middle_left ul li {
+        padding: 5px 0;
+      }
+
+      .middle_left ul li a {
+        text-decoration: none;
+      }
+
+      .price::before {
+        content: "\00A5";
+        margin-right: 1px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table cellpading="0" cellspacing="0">
+      <tr class="header">
+        <td colspan="2" class="header_content">
+          <h1><img src="./img/coffee.jpg" />来杯咖啡吗?</h1>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            width: 300px;
+            background-color: rgba(125, 155, 223);
+            vertical-align: top;
+          "
+          rowspan="10"
+        >
+          <div class="middle_left">
+            <ul>
+              <li><a href="#natie">拿铁</a></li>
+              <li><a href="#kabu">卡布奇诺</a></li>
+              <li><a href="#meishi">美式咖啡</a></li>
+              <li><a href="#maqiduo">焦糖玛奇朵</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <div style="height: 150px; text-align: center; margin: 10px 0;">
+            <img src="./img/coffee.jpg" style="height: 100%;" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" valign="middle">
+          <table
+            style="width: 500px;"
+            border="1px"
+            cellpading="0"
+            cellspacing="0"
+          >
+            <tr align="center" valign="middle">
+              <td>咖啡</td>
+              <td>价格</td>
+            </tr>
+            <tr align="center" valign="middle">
+              <td>拿铁</td>
+              <td class="price">20</td>
+            </tr>
+            <tr align="center" valign="middle">
+              <td>卡布奇诺</td>
+              <td class="price">30</td>
+            </tr>
+            <tr align="center" valign="middle">
+              <td>美式咖啡</td>
+              <td class="price">30</td>
+            </tr>
+            <tr align="center" valign="middle">
+              <td>焦糖玛奇朵</td>
+              <td class="price">20</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left; font-size: 32px; padding: 10px 20px;">
+          <h2 id="natie">拿铁</h2>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 20px;">
+          <img
+            src="./img/coffee.jpg"
+            style="height: 100px; display: block; margin: 10px 0;"
+          />
+          <span style="display: block; text-indent: 2em;">
+            <span style="font-weight: 900; font-size: 25px;">拿</span
+            >铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。喝拿铁的意大利人，与其说他们喜欢意大利浓缩咖啡，不如说他们喜欢牛奶，也只有Espresso才能给普普通通的牛奶带来让人难以忘怀的味道。
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left; font-size: 32px; padding: 10px 20px;">
+          <h2 id="kabu">卡布奇诺</h2>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 20px;">
+          <img
+            src="./img/coffee.jpg"
+            style="height: 100px; display: block; margin: 10px 0;"
+          />
+          <span style="display: block; text-indent: 2em;">
+            <span style="font-weight: 900; font-size: 25px;">卡</span
+            >布奇诺是一种加入以同量的意大利特浓咖啡和蒸汽泡沫牛奶相混合的意大利咖啡。此时咖啡的颜色，就像卡布奇诺教会的修士在深褐色的外衣上覆上一条头巾一样，咖啡因此得名。传统的卡布奇诺咖啡是三分之一浓缩咖啡，三分之一蒸汽牛奶和三分之一泡沫牛奶，并在上面撒上小颗粒的肉桂粉末。
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left; font-size: 32px; padding: 10px 20px;">
+          <h2 id="meishi">美式咖啡</h2>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 20px;">
+          <img
+            src="./img/coffee.jpg"
+            style="height: 100px; display: block; margin: 10px 0;"
+          />
+          <span style="display: block; text-indent: 2em;">
+            <span style="font-weight: 900; font-size: 25px;">美</span
+            >式咖啡（英文：Americano，意大利语：Caffè Americano）咖啡的一种，是最普通的咖啡。是使用滴滤式咖啡壶所制作出的黑咖啡，又或者是意式浓缩中加入大量的水制成。
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left; font-size: 32px; padding: 10px 20px;">
+          <h2 id="maqiduo">焦糖玛奇朵</h2>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 20px;">
+          <img
+            src="./img/coffee.jpg"
+            style="height: 100px; display: block; margin: 10px 0;"
+          />
+          <span style="display: block; text-indent: 2em;">
+            <span style="font-weight: 900; font-size: 25px;">焦</span
+            >糖玛奇朵（英文：Caramel Macchiato）是在香浓热牛奶上加入浓缩咖啡、香草，再淋上纯正焦糖而制成的饮品，融合三种不同口味。Macchiato意大利文，意思是“烙印”和“印染”，中文音译“玛奇朵”。“Caramel”意思是焦糖。焦糖玛琪朵，寓意“甜蜜的印记”。
+          </span>
+        </td>
+      </tr>
+      <tr>
+          <td colspan="2" style="background-color: rgba(125, 155, 155);color: white;text-align: center;">版权所有@方友鑫</td>
+      </tr>
+    </table>
+  </body>
+</html>
