@@ -144,7 +144,7 @@ class Tab extends React.Component {
     const addList = loading ? "add_hide" : "add_more";
     if (githubData.length !== 0) {
       renderInfo = (
-        <div style={{ width: "1200px", display: "flex", flexWrap: "wrap" }}>
+        <div className="listContent">
           {githubData.map((item, index) => {
             return (
               <GithubList

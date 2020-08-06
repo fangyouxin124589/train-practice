@@ -79,8 +79,20 @@ html {
     cursor: pointer;
 }
 
+.listContent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto;
+    width: 1200px;
+    overflow: hidden;
+}
+
 @media (max-width: 1220px) {
     .list-content {
+        width: 1000px;
+    }
+    .listContent {
         width: 1000px;
     }
 }
@@ -89,10 +101,16 @@ html {
     .list-content {
         width: 800px;
     }
+    .listContent {
+        width: 800px;
+    }
 }
 
 @media (max-width: 840px) {
     .list-content {
+        width: 100%;
+    }
+    .listContent {
         width: 100%;
     }
 }
@@ -101,10 +119,17 @@ html {
     .list-content {
         width: 500px;
     }
+    .listContent {
+        width: 500px;
+    }
 }
 
 @media (max-width: 520px) {
     .list-content {
+        width: 100%;
+    }
+
+    .listContent {
         width: 100%;
     }
 
