@@ -143,20 +143,29 @@ class Tab extends React.Component {
     const { githubData, loading } = this.state;
     const addList = loading ? "add_hide" : "add_more";
     if (githubData.length !== 0) {
-      renderInfo = githubData.map((item, index) => {
-        return (
-          <GithubList
-            key={index}
-            listNum={++index}
-            avatar={item.owner.avatar_url}
-            name={item.name}
-            stargazersCount={item.stargazers_count}
-            forksCount={item.forks_count}
-            openIssuesCount={item.open_issues_count}
-            htmlUrl={item.html_url}
-          />
-        );
-      });
+      renderInfo = (
+        <div style={{ width: "1200px", display: "flex", flexWrap: "wrap" }}>
+          {githubData.map((item, index) => {
+            return (
+              <GithubList
+                key={index}
+                listNum={++index}
+                avatar={item.owner.avatar_url}
+                name={item.name}
+                stargazersCount={item.stargazers_count}
+                forksCount={item.forks_count}
+                openIssuesCount={item.open_issues_count}
+                htmlUrl={item.html_url}
+              />
+            );
+          })}
+          <div className={addList}>
+            <button type="button" onClick={this.addMore} className="addBtn">
+              加载更多
+            </button>
+          </div>
+        </div>
+      );
     } else {
       renderInfo = (
         <div>
@@ -210,11 +219,6 @@ class Tab extends React.Component {
             </div>
           )} */}
           {renderInfo}
-        </div>
-        <div className={addList}>
-          <button type="button" onClick={this.addMore} className="addBtn">
-            加载更多
-          </button>
         </div>
       </div>
     );
