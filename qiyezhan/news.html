@@ -1,140 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="./images/faviconWeb.ico"
-      type="image/x-icon"
-    />
-    <title>动漫人物介绍_新闻列表</title>
-    <link rel="stylesheet" href="./news.css" />
-    <script src="../vue.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
-  </head>
 
-  <body>
-    <div id="app">
-      <div class="header">
-        <div class="header_left">
-          <span>动漫人物介绍</span>
-        </div>
-        <div class="header_right">
-          <a href="./index.html">首页</a>
-          <a href="./news.html">新闻列表</a>
-          <a href="./about.html">关于我们</a>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./images/faviconWeb.ico" type="image/x-icon" />
+  <title>动漫人物介绍_新闻列表</title>
+  <link rel="stylesheet" href="./news.css" />
+  <script src="../vue.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="header">
+      <div class="header_left">
+        <a href="./index.html">动漫人物介绍</a>
       </div>
-      <h3 class="news_title">新闻列表页</h3>
-      <div class="main">
-        <div class="news_list">
-          <div
-            class="news_card"
-            v-for="(article, index) in articles"
-            :key="index"
-            @click="readID(article.id)"
-          >
-            <div class="article_image">
-              <img :src="article.image" alt="" />
-            </div>
-            <div class="article_content">
-              <div class="arc_header">
-                <div class="arc_date_img">
-                  <img src="./images/日历.png" alt="" />
-                </div>
-                <div class="arc_date">
-                  <span>
-                    <!-- {{ new Date(article.updatedAt).getFullYear() + "-" + (new
+      <div class="header_right">
+        <a href="./index.html">首页</a>
+        <a href="./news.html">新闻列表</a>
+        <a href="./about.html">关于我们</a>
+      </div>
+    </div>
+    <h3 class="news_title">新闻列表页</h3>
+    <div class="main">
+      <div class="news_list">
+        <div class="news_card" v-for="(article, index) in articles" :key="index" @click="readID(article.id)">
+          <div class="article_image">
+            <img :src="article.image" alt="" />
+          </div>
+          <div class="article_content">
+            <div class="arc_header">
+              <div class="arc_date_img">
+                <img src="./images/日历.png" alt="" />
+              </div>
+              <div class="arc_date">
+                <span>
+                  <!-- {{ new Date(article.updatedAt).getFullYear() + "-" + (new
                     Date(article.updatedAt).getMonth() + 1) + "-" + new
                     Date(article.updatedAt).getDate() }} -->
-                    {{article.year + "-" + article.month + "-" + article.day}}
-                  </span>
-                </div>
+                  {{article.year + "-" + article.month + "-" + article.day}}
+                </span>
               </div>
-              <div class="arc_title">
-                <p style="margin-left: 10px;">{{article.title}}</p>
-              </div>
+            </div>
+            <div class="arc_title">
+              <p style="margin-left: 10px;">{{article.title}}</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="page">
-        <div class="page_btn_list">
-          <ul>
-            <li>
-              <button @click="prePage"><</button>
-            </li>
-            <li v-for="(item,index) in totalPage">
-              <button @click="toPage(index)" :class="{pageActive: currentPage == index}" style="margin-left: 10px;">
-                {{index + 1}}
-              </button>
-            </li>
-            <li>
-              <button @click="nextPage" style="margin-left: 10px; float: left;">
-                >
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer">
-        <p class="footer_p">版权所属 @ 方友鑫</p>
+    </div>
+    <div class="page">
+      <div class="page_btn_list">
+        <ul>
+          <li>
+            <button @click="prePage">
+              <</button> </li> <li v-for="(item,index) in totalPage">
+                <button @click="toPage(index)" :class="{pageActive: currentPage == index}" style="margin-left: 10px;">
+                  {{index + 1}}
+                </button>
+          </li>
+          <li>
+            <button @click="nextPage" style="margin-left: 10px; float: left;">
+              >
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
+    <div class="footer">
+      <div class="footer_top">
+        <div class="footer_top_left">
+          <p>联系方式: 15865948563</p>
+          <p>地址: 福建省福州市晋安区</p>
+          <p>email: 1586594853@qq.com</p>
+        </div>
+        <div class="footer_top_right">
+          <img src="./images/scan.jpg" alt="">
+        </div>
+      </div>
+      <div class="footer_bottom">
+        <span>版权所有@方友鑫</span>
+      </div>
+    </div>
+  </div>
 
-    <script>
-      new Vue({
-        el: "#app",
-        data() {
-          return {
-            articles: [],
-            pageNum: 1, //总页数
-            totalPage: [], //总数据
-            currentPage: 0, //当前页
-            pageSize: 4, //每页显示个数
-          };
-        },
-        created() {
-          this.getArticles();
-        },
-        methods: {
-          async getArticles() {
-            const res = await axios.get(
-              "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articles"
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          articles: [],
+          pageNum: 1, //总页数
+          totalPage: [], //总数据
+          currentPage: 0, //当前页
+          pageSize: 4, //每页显示个数
+        };
+      },
+      created() {
+        this.getArticles();
+      },
+      methods: {
+        async getArticles() {
+          const res = await axios.get(
+            "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articles"
+          );
+          this.pageNum = Math.ceil(res.data.data.length / this.pageSize) || 1;
+          for (let i = 0; i < this.pageNum; i++) {
+            this.totalPage[i] = res.data.data.slice(
+              this.pageSize * i,
+              this.pageSize * (i + 1)
             );
-            this.pageNum = Math.ceil(res.data.data.length / this.pageSize) || 1;
-            for (let i = 0; i < this.pageNum; i++) {
-              this.totalPage[i] = res.data.data.slice(
-                this.pageSize * i,
-                this.pageSize * (i + 1)
-              );
-              console.log(this.totalPage[i]);
-            }
-            this.articles = this.totalPage[this.currentPage];
-            // console.log(this.articles);
-          },
-          readID(id) {
-            window.location.href = `./news-detail.html?id=${id}`;
-          },
-          prePage() {
-            if (this.currentPage == 0) {
-              return;
-            }
-            this.articles = this.totalPage[--this.currentPage];
-          },
-          nextPage() {
-            if (this.currentPage == this.pageNum - 1) {
-              return;
-            }
-            this.articles = this.totalPage[++this.currentPage];
-          },
-          toPage(index) {
-            this.currentPage = index;
-            this.articles = this.totalPage[this.currentPage];
-          },
+            console.log(this.totalPage[i]);
+          }
+          this.articles = this.totalPage[this.currentPage];
+          // console.log(this.articles);
         },
-      });
-    </script>
-  </body>
+        readID(id) {
+          window.location.href = `./news-detail.html?id=${id}`;
+        },
+        prePage() {
+          if (this.currentPage == 0) {
+            return;
+          }
+          this.articles = this.totalPage[--this.currentPage];
+        },
+        nextPage() {
+          if (this.currentPage == this.pageNum - 1) {
+            return;
+          }
+          this.articles = this.totalPage[++this.currentPage];
+        },
+        toPage(index) {
+          this.currentPage = index;
+          this.articles = this.totalPage[this.currentPage];
+        },
+      },
+    });
+  </script>
+</body>
+
 </html>

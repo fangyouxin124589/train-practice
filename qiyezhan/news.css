@@ -3,14 +3,15 @@
     padding: 0;
 }
 
-html{
-    height:100%;
+html {
+    height: 100%;
 }
-body{
-    min-height:100%;
-    margin:0;
-    padding:0;
-    position:relative;
+
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
 }
 
 .header {
@@ -27,6 +28,11 @@ body{
     flex: 1;
     /* margin-left: 100px; */
     align-self: center;
+}
+
+.header_left a {
+    text-decoration: none;
+    color: black;
 }
 
 .header_right {
@@ -73,7 +79,7 @@ body{
     transform: scale(1.1);
 }
 
-.article_image > img {
+.article_image>img {
     width: 250px;
     height: 200px;
 }
@@ -90,13 +96,13 @@ body{
     float: left;
 }
 
-.arc_date_img > img {
+.arc_date_img>img {
     width: 20px;
     align-items: center;
     margin-left: 10px;
 }
 
-.arc_date > span {
+.arc_date>span {
     color: gray;
     font-size: 14px;
     align-items: center;
@@ -106,10 +112,10 @@ body{
 .page {
     height: 40px;
     margin-top: 20px;
-    padding-bottom: 30px;
+    padding-bottom: 230px;
 }
 
-.page_btn_list{
+.page_btn_list {
     height: 100%;
     width: 280px;
     margin: 0 auto;
@@ -130,6 +136,7 @@ body{
     padding: 8px 20px;
     color: white;
 }
+
 .pageActive {
     background-color: #5a28e2 !important;
 }
@@ -145,15 +152,44 @@ body{
 }
 
 .footer {
-    height: 25px;
-    line-height:24px;
-    background-color: skyblue;
     width: 100%;
+    height: 205px;
+    background-color: rgb(155, 151, 151);
     position: absolute;
     bottom: 0;
 }
 
-.footer_p {
+.footer_top {
+    width: 100%;
+    height: 180px;
+}
+
+.footer_top_left {
+    width: 65%;
+    float: left;
+    text-align: center;
+}
+
+.footer_top_left p {
+    padding-top: 20px;
+    height: 30px;
+    text-align: left;
+    padding-left: 20%;
+}
+
+.footer_top_right {
+    width: 35%;
+    float: left;
+}
+
+.footer_top_right img {
+    width: 120px;
+    padding-top: 30px;
+}
+
+.footer_bottom {
+    height: 20px;
+    width: 100%;
     text-align: center;
     border-top: 1px solid gray;
 }
@@ -162,9 +198,11 @@ body{
     .header {
         width: 100%;
     }
-    .news_title{
+
+    .news_title {
         width: 100%;
     }
+
     .main {
         width: 100%;
     }
@@ -174,6 +212,7 @@ body{
     .news_list {
         justify-content: space-around;
     }
+
     /* .news_card{
         width: 400px;
     }

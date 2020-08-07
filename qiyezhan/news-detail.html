@@ -1,78 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="./images/faviconWeb.ico"
-      type="image/x-icon"
-    />
-    <title>动漫人物介绍_新闻详情</title>
-    <link rel="stylesheet" href="./news-detail.css" />
-    <script src="../vue.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <div class="header">
-        <div class="header_left">
-          <span>动漫人物介绍</span>
-        </div>
-        <div class="header_right">
-          <a href="./index.html">首页</a>
-          <a href="./news.html">新闻列表</a>
-          <a href="./about.html">关于我们</a>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./images/faviconWeb.ico" type="image/x-icon" />
+  <title>动漫人物介绍_新闻详情</title>
+  <link rel="stylesheet" href="./news-detail.css" />
+  <script src="../vue.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="header">
+      <div class="header_left">
+        <a href="./index.html">动漫人物介绍</a>
       </div>
-      <div class="main">
-        <h3 style="text-align: center; margin-bottom: 20px;border-bottom: 1px solid gray;">
-          {{this.article.title}}
-        </h3>
-        <div v-html="this.article.body" class="article_content"></div>
-      </div>
-      <div class="footer">
-        <p class="footer_p">版权所属 @ 方友鑫</p>
+      <div class="header_right">
+        <a href="./index.html">首页</a>
+        <a href="./news.html">新闻列表</a>
+        <a href="./about.html">关于我们</a>
       </div>
     </div>
+    <div class="main">
+      <h3 style="text-align: center; margin-bottom: 20px;border-bottom: 1px solid gray;">
+        {{this.article.title}}
+      </h3>
+      <div v-html="this.article.body" class="article_content"></div>
+    </div>
+    <div class="footer">
+      <div class="footer_top">
+        <div class="footer_top_left">
+          <p>联系方式: 15865948563</p>
+          <p>地址: 福建省福州市晋安区</p>
+          <p>email: 1586594853@qq.com</p>
+        </div>
+        <div class="footer_top_right">
+          <img src="./images/scan.jpg" alt="">
+        </div>
+      </div>
+      <div class="footer_bottom">
+        <span>版权所有@方友鑫</span>
+      </div>
+    </div>
+  </div>
 
-    <script>
-      new Vue({
-        el: "#app",
-        data() {
-          return {
-            article: [],
-          };
-        },
-        created() {
-          this.getArticle();
-        },
-        methods: {
-          async getArticle() {
-            const id = this.getID();
-            var index;
-            // console.log(id);
-            const res = await axios.get(
-              `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/article`
-            );
-            console.log(res.data.data);
-            for (let i = 0; i < res.data.data.length; i++) {
-              if(id === res.data.data[i].id){
-                index = i;
-                break;
-              }
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          article: [],
+        };
+      },
+      created() {
+        this.getArticle();
+      },
+      methods: {
+        async getArticle() {
+          const id = this.getID();
+          var index;
+          // console.log(id);
+          const res = await axios.get(
+            `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/article`
+          );
+          console.log(res.data.data);
+          for (let i = 0; i < res.data.data.length; i++) {
+            if (id === res.data.data[i].id) {
+              index = i;
+              break;
             }
-            this.article = res.data.data[index];
-            console.log(this.article);
-          },
-          getID() {
-            var query = window.location.search.substring(1).split("&");
-            var id = query[0].split("=")[1];
-            // console.log(id)
-            return id;
-          },
+          }
+          this.article = res.data.data[index];
+          console.log(this.article);
         },
-      });
-    </script>
-  </body>
+        getID() {
+          var query = window.location.search.substring(1).split("&");
+          var id = query[0].split("=")[1];
+          // console.log(id)
+          return id;
+        },
+      },
+    });
+  </script>
+</body>
+
 </html>
