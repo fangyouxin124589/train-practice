@@ -3,69 +3,71 @@ import axios from "axios";
 import GithubList from "./GithubList";
 import Load from "./Load";
 import "../css/Tab.css";
+import InfiniteScroll from "react-infinite-scroller";
 
 class Tab extends React.Component {
   constructor(props) {
     super(props);
-    this.addMore = this.addMore.bind(this);
     this.state = {
       tabList: [
         {
           name: "All",
           url:
-            "https://api.github.com/search/repositories?q=stars:%3E11&sort=stars&order=desc&type=Repositories",
+            "https://api.github.com/search/repositories?q=stars:%3E11&sort=stars&order=desc&type=Repositories&page=",
         },
         {
           name: "java",
           url:
-            "https://api.github.com/search/repositories?q=stars:%3E11+language:java&sort=stars&order=desc&type=Repositories",
+            "https://api.github.com/search/repositories?q=stars:%3E11+language:java&sort=stars&order=desc&type=Repositories&page=",
         },
         {
           name: "javascript",
           url:
-            "https://api.github.com/search/repositories?q=stars:%3E11+language:javascript&sort=stars&order=desc&type=Repositories",
+            "https://api.github.com/search/repositories?q=stars:%3E11+language:javascript&sort=stars&order=desc&type=Repositories&page=",
         },
         {
           name: "css",
           url:
-            "https://api.github.com/search/repositories?q=stars:%3E11+language:css&sort=stars&order=desc&type=Repositories",
+            "https://api.github.com/search/repositories?q=stars:%3E11+language:css&sort=stars&order=desc&type=Repositories&page=",
         },
         {
           name: "ruby",
           url:
-            "https://api.github.com/search/repositories?q=stars:%3E1+language:ruby&sort=stars&order=desc&type=Repositories",
+            "https://api.github.com/search/repositories?q=stars:%3E1+language:ruby&sort=stars&order=desc&type=Repositories&page=",
         },
         {
           name: "python",
           url:
-            "https://api.github.com/search/repositories?q=stars:%3E1+language:python&sort=stars&order=desc&type=Repositories",
+            "https://api.github.com/search/repositories?q=stars:%3E1+language:python&sort=stars&order=desc&type=Repositories&page=",
         },
       ],
       tabName: "All",
       tabUrl:
-        "https://api.github.com/search/repositories?q=stars:%3E11&sort=stars&order=desc&type=Repositories",
+        "https://api.github.com/search/repositories?q=stars:%3E11&sort=stars&order=desc&type=Repositories&page=",
       githubData: [],
       count: 0,
       loading: true,
-      addNumber: 10,
+      pageNum: 1,
+      pageTotal: 3,
+      hasMore: true,
     };
   }
 
   switchTab = (e, { name, url }) => {
     let { target } = e;
-    // console.log(target);
     const filterOption = target.getAttribute("data-filter");
     if (filterOption) {
       document.querySelectorAll(".tab-list.active").forEach((btn) => {
-        // console.log(btn);
         btn.classList.remove("active");
       });
       target.classList.add("active");
     }
     this.setState({
+      githubData: [],
       tabName: name,
       tabUrl: url,
-      addNumber: 10,
+      pageNum: 1,
+      hasMore: true,
     });
     localStorage.setItem("name", name);
     localStorage.setItem("url", url);
@@ -74,31 +76,19 @@ class Tab extends React.Component {
     }, 200);
   };
 
-  addMore() {
-    const number = this.state.addNumber + 10;
-    // console.log(number)
-    this.setState({
-      addNumber: number,
-    });
-    this.FetchGit();
-  }
-
   //获得数据
   async FetchGit() {
-    this.setState({
-      githubData: [],
-    });
     if (this.state.count === 0) {
       const name = localStorage.getItem("name");
-      const { addNumber } = this.state;
       if (name) {
         const res = await axios.get(localStorage.getItem("url"));
         this.setState({
-          githubData: res.data.items.slice(0, addNumber),
+          githubData: res.data.items,
           loading: false,
           count: this.state.count + 1,
           name: localStorage.getItem("name"),
           tabUrl: localStorage.getItem("url"),
+          pageNum: 2,
         });
         const filterOption = document.getElementById(
           localStorage.getItem("name")
@@ -110,11 +100,19 @@ class Tab extends React.Component {
           filterOption.classList.add("active");
         }
       } else {
-        const res = await axios.get(this.state.tabUrl);
-        const { addNumber } = this.state;
+        const { pageNum, tabUrl, githubData, pageTotal } = this.state;
+        if (pageNum > pageTotal) {
+          this.setState({
+            hasMore: false,
+          });
+          return;
+        }
+        const url = tabUrl + pageNum;
+        const res = await axios.get(url);
         this.setState({
-          githubData: res.data.items.slice(0, addNumber),
+          githubData: githubData.concat(res.data.items),
           loading: false,
+          pageNum: pageNum + 1,
         });
         const filterOption = document.getElementById("All");
         if (filterOption) {
@@ -125,11 +123,19 @@ class Tab extends React.Component {
         }
       }
     } else {
-      const res = await axios.get(this.state.tabUrl);
-      const { addNumber } = this.state;
+      const { pageNum, tabUrl, githubData, pageTotal } = this.state;
+      if (pageNum > pageTotal) {
+        this.setState({
+          hasMore: false,
+        });
+        return;
+      }
+      const url = tabUrl + pageNum;
+      const res = await axios.get(url);
       this.setState({
-        githubData: res.data.items.slice(0, addNumber),
+        githubData: githubData.concat(res.data.items),
         loading: false,
+        pageNum: pageNum + 1,
       });
     }
   }
@@ -140,31 +146,39 @@ class Tab extends React.Component {
 
   render() {
     let renderInfo;
-    const { githubData, loading } = this.state;
+    const { githubData, loading, hasMore } = this.state;
     const addList = loading ? "add_hide" : "add_more";
     if (githubData.length !== 0) {
       renderInfo = (
-        <div className="listContent">
-          {githubData.map((item, index) => {
-            return (
-              <GithubList
-                key={index}
-                listNum={++index}
-                avatar={item.owner.avatar_url}
-                name={item.name}
-                stargazersCount={item.stargazers_count}
-                forksCount={item.forks_count}
-                openIssuesCount={item.open_issues_count}
-                htmlUrl={item.html_url}
-              />
-            );
-          })}
-          <div className={addList}>
-            <button type="button" onClick={this.addMore} className="addBtn">
-              加载更多
-            </button>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={() => this.FetchGit()}
+          hasMore={hasMore}
+          loader={
+            <div className="tabLoading">
+              <div className="tabLoadingContent">
+                正在查找<i className="fa fa-spinner fa-spin"></i>
+              </div>
+            </div>
+          }
+        >
+          <div className="listContent">
+            {githubData.map((item, index) => {
+              return (
+                <GithubList
+                  key={index}
+                  listNum={++index}
+                  avatar={item.owner.avatar_url}
+                  name={item.name}
+                  starsCount={item.stargazers_count}
+                  forksCount={item.forks_count}
+                  openIssuesCount={item.open_issues_count}
+                  htmlUrl={item.html_url}
+                />
+              );
+            })}
           </div>
-        </div>
+        </InfiniteScroll>
       );
     } else {
       renderInfo = (
@@ -194,32 +208,7 @@ class Tab extends React.Component {
             );
           })}
         </div>
-        <div className="list-content">
-          {/* {githubData.length !== 0 ? (
-            githubData.map((item, index) => {
-              return (
-                <GithubList
-                  key={index}
-                  listNum={++index}
-                  avatar={item.owner.avatar_url}
-                  name={item.name}
-                  stargazersCount={item.stargazers_count}
-                  forksCount={item.forks_count}
-                  openIssuesCount={item.open_issues_count}
-                  htmlUrl={item.html_url}
-                />
-              );
-            })
-          ) : (
-            <div>
-              <h3 style={{ textAlign: "center" }}>
-                世界名画~（github热门项目加载中）
-              </h3>
-              <Load />
-            </div>
-          )} */}
-          {renderInfo}
-        </div>
+        <div className="list-content">{renderInfo}</div>
       </div>
     );
   }

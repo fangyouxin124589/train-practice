@@ -88,6 +88,16 @@ html {
     overflow: hidden;
 }
 
+.tabLoading {
+    width: 1200px;
+}
+
+.tabLoadingContent {
+    width: 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 @media (max-width: 1220px) {
     .list-content {
         width: 1000px;
