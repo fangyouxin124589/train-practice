@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
-import styles from './IndexPage.css';
+import styles from './Example.css';
 
-function IndexPage() {
+function Example() {
   return (
     <div className={styles.normal}>
       <h1 className={styles.title}>Yay! Welcome to dva!</h1>
@@ -15,7 +15,7 @@ function IndexPage() {
   );
 }
 
-IndexPage.propTypes = {
+Example.propTypes = {
 };
 
-export default connect()(IndexPage);
+export default connect()(Example);
