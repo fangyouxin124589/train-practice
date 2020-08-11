@@ -134,7 +134,7 @@ class BattleBegin extends React.Component {
         <div className="flex flex-wrap flex-space-around">
           <div style={divCenterStyle}>
             <div className="instruction_content" style={divCenterStyle}>
-              Enter two Github project
+              Enter two Github users
             </div>
             <i
               className="fa fa-users "
@@ -193,7 +193,7 @@ class BattleBegin extends React.Component {
               <div>
                 <input
                   ref="inputOne"
-                  placeholder="github project"
+                  placeholder="github username"
                   className="player_input"
                   onChange={this.oneInputChange}
                   onKeyDown={this.oneEnter}
@@ -203,7 +203,7 @@ class BattleBegin extends React.Component {
                   className="submit_btn disabled_btn"
                   ref="submitOne"
                 >
-                  Submit
+                  S U B M I T
                 </button>
               </div>
             )}
@@ -238,7 +238,7 @@ class BattleBegin extends React.Component {
               <div>
                 <input
                   ref="inputTwo"
-                  placeholder="github project"
+                  placeholder="github username"
                   className="player_input"
                   onChange={this.twoInputChange}
                   onKeyDown={this.twoEnter}
@@ -248,7 +248,7 @@ class BattleBegin extends React.Component {
                   className="submit_btn disabled_btn"
                   ref="submitTwo"
                 >
-                  Submit
+                  S U B M I T
                 </button>
               </div>
             )}

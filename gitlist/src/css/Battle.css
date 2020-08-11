@@ -47,6 +47,9 @@
     height: 35px;
     border-radius: 5px;
     cursor: pointer;
+    border: none;
+    color: white;
+    background-color: rgb(106, 196, 231);
 }
 
 .battle_btn {
@@ -56,6 +59,9 @@
     font-size: 20px;
     border-radius: 5px;
     cursor: pointer;
+    border: none;
+    color: white;
+    background-color: tomato;
 }
 
 .showPlayer {
@@ -78,7 +84,7 @@
 }
 
 .disabled_btn {
-    opacity: 0.5;
+    opacity: 0.2;
     pointer-events: none;
 }
 
@@ -94,6 +100,9 @@
     font-size: 20px;
     border-radius: 5px;
     cursor: pointer;
+    border: none;
+    color: white;
+    background-color: yellowgreen;
 }
 
 @media (max-width:1200px) {
