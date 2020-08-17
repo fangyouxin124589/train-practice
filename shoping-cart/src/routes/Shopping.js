@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "dva";
-import ProductsList from "../components/ProductsList";
+// import ProductsList from "../components/ProductsList";
+import ProductsList from "@/components/ProductsList"
 import ShoppingCart from '../components/ShoppingCart'
 import { Layout, Button, Drawer, Badge, Row, Col } from "antd";
 import { createFromIconfontCN } from "@ant-design/icons";

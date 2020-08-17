@@ -12,7 +12,6 @@
     "axios": "^0.19.2",
     "babel-plugin-import": "^1.13.0",
     "dva": "^2.4.1",
-    "dva-loading": "^3.0.20",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
