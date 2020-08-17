@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { HashRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import GithubList from "./GithubList";
 import Load from "./Load";
 import "../css/Tab.css";
@@ -141,6 +142,9 @@ class Tab extends React.Component {
   }
 
   componentDidMount() {
+    document.querySelectorAll(".tab-list.active").forEach((btn) => {
+      btn.classList.remove("active");
+    });
     this.FetchGit();
   }
 
@@ -155,7 +159,7 @@ class Tab extends React.Component {
           loadMore={() => this.FetchGit()}
           hasMore={hasMore}
           loader={
-            <div className="tabLoading">
+            <div className="tabLoading" key={0}>
               <div className="tabLoadingContent">
                 正在查找<i className="fa fa-spinner fa-spin"></i>
               </div>
@@ -194,19 +198,31 @@ class Tab extends React.Component {
       <div>
         <span className="title">Github热门项目</span>
         <div className="tab">
-          {this.state.tabList.map((list, index) => {
-            return (
-              <button
-                key={index}
-                className="tab-list"
-                data-filter={list.name}
-                id={list.name}
-                onClick={(e) => this.switchTab(e, list)}
-              >
-                {list.name}
-              </button>
-            );
-          })}
+          <Router>
+            {this.state.tabList.map((list, index) => {
+              return (
+                // <button
+                //   key={index}
+                //   className="tab-list"
+                //   data-filter={list.name}
+                //   id={list.name}
+                //   onClick={(e) => this.switchTab(e, list)}
+                // >
+                //   {list.name}
+                // </button>
+                <NavLink
+                  to={`/Popular?language=${list.name}`}
+                  className="tab-list"
+                  key={index}
+                  data-filter={list.name}
+                  id={list.name}
+                  onClick={(e) => this.switchTab(e, list)}
+                >
+                  {list.name}
+                </NavLink>
+              );
+            })}
+          </Router>
         </div>
         <div className="list-content">{renderInfo}</div>
       </div>
