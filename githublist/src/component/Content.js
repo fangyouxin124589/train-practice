@@ -11,8 +11,8 @@ import loadable from '../util/loadable.js'
 // import Popular from './Tab.js';
 // import Battle from './Battle.js';
 
-const Popular = loadable(() => import('Tab.js'))
-const Battle = loadable(() => import('Battle.js'))
+const Popular = loadable(() => import('./Tab.js'))
+const Battle = loadable(() => import('./Battle.js'))
 
 //内容部分
 class Content extends React.Component{
