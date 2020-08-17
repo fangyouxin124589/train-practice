@@ -7,8 +7,8 @@ import {
     Link,
     Redirect
   } from "react-router-dom";
-import Popular from './Tab';
-import Battle from './Battle';
+import Popular from './Tab.js';
+import Battle from './Battle.js';
 
 //内容部分
 class Content extends React.Component{

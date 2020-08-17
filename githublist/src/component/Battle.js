@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 
 import "../css/Battle.css";
-import GithubList from "../component/GithubList";
+import GithubList from "../component/GithubList.js";
 
 //初始页面
 class BattleBegin extends React.Component {

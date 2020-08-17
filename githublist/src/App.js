@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Header from "./component/Header";
-import Content from "./component/Content";
+import Header from "./component/Header.js";
+import Content from "./component/Content.js";
 
 class App extends React.Component {
   constructor(props) {
