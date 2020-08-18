@@ -165,7 +165,7 @@ class BattleBegin extends React.Component {
         <div className="flex flex-wrap flex-space-around">
           <div style={divCenterStyle}>
             <div className="instruction_content" style={divCenterStyle}>
-              Enter two Github users
+              Enter Two Github Users
             </div>
             <i
               className="fa fa-users "
@@ -183,7 +183,7 @@ class BattleBegin extends React.Component {
           </div>
           <div style={divCenterStyle}>
             <div className="instruction_content" style={divCenterStyle}>
-              See the winner
+              See The Winner
             </div>
             <i
               className="fa fa-trophy"
