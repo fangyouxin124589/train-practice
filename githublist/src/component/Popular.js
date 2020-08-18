@@ -3,10 +3,10 @@ import axios from "axios";
 import { HashRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import GithubList from "./GithubList";
 import Load from "./Load";
-import "../css/Tab.css";
+import "../css/Popular.css";
 import InfiniteScroll from "react-infinite-scroller";
 
-class Tab extends React.Component {
+class Popular extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,6 +51,8 @@ class Tab extends React.Component {
       pageNum: 1,
       pageTotal: 3,
       hasMore: true,
+      errorContent: {},
+      error: false,
     };
   }
 
@@ -82,23 +84,31 @@ class Tab extends React.Component {
     if (this.state.count === 0) {
       const name = localStorage.getItem("name");
       if (name) {
-        const res = await axios.get(localStorage.getItem("url"));
-        this.setState({
-          githubData: res.data.items,
-          loading: false,
-          count: this.state.count + 1,
-          name: localStorage.getItem("name"),
-          tabUrl: localStorage.getItem("url"),
-          pageNum: 2,
-        });
-        const filterOption = document.getElementById(
-          localStorage.getItem("name")
-        );
-        if (filterOption) {
-          document
-            .querySelectorAll(".tab-list.active")
-            .forEach((btn) => btn.classList.remove("active"));
-          filterOption.classList.add("active");
+        try {
+          const res = await axios.get(localStorage.getItem("url"));
+          this.setState({
+            githubData: res.data.items,
+            loading: false,
+            count: this.state.count + 1,
+            name: localStorage.getItem("name"),
+            tabUrl: localStorage.getItem("url"),
+            pageNum: 2,
+          });
+          const filterOption = document.getElementById(
+            localStorage.getItem("name")
+          );
+          if (filterOption) {
+            document
+              .querySelectorAll(".tab-list.active")
+              .forEach((btn) => btn.classList.remove("active"));
+            filterOption.classList.add("active");
+          }
+        } catch (e) {
+          const errorContent = e;
+          this.setState({
+            errorContent,
+            error: true,
+          });
         }
       } else {
         const { pageNum, tabUrl, githubData, pageTotal } = this.state;
@@ -108,19 +118,27 @@ class Tab extends React.Component {
           });
           return;
         }
-        const url = tabUrl + pageNum;
-        const res = await axios.get(url);
-        this.setState({
-          githubData: githubData.concat(res.data.items),
-          loading: false,
-          pageNum: pageNum + 1,
-        });
-        const filterOption = document.getElementById("All");
-        if (filterOption) {
-          document
-            .querySelectorAll(".tab-list.active")
-            .forEach((btn) => btn.classList.remove("active"));
-          filterOption.classList.add("active");
+        try {
+          const url = tabUrl + pageNum;
+          const res = await axios.get(url);
+          this.setState({
+            githubData: githubData.concat(res.data.items),
+            loading: false,
+            pageNum: pageNum + 1,
+          });
+          const filterOption = document.getElementById("All");
+          if (filterOption) {
+            document
+              .querySelectorAll(".tab-list.active")
+              .forEach((btn) => btn.classList.remove("active"));
+            filterOption.classList.add("active");
+          }
+        } catch (e) {
+          const errorContent = e;
+          this.setState({
+            errorContent,
+            error: true,
+          });
         }
       }
     } else {
@@ -131,13 +149,21 @@ class Tab extends React.Component {
         });
         return;
       }
-      const url = tabUrl + pageNum;
-      const res = await axios.get(url);
-      this.setState({
-        githubData: githubData.concat(res.data.items),
-        loading: false,
-        pageNum: pageNum + 1,
-      });
+      try {
+        const url = tabUrl + pageNum;
+        const res = await axios.get(url);
+        this.setState({
+          githubData: githubData.concat(res.data.items),
+          loading: false,
+          pageNum: pageNum + 1,
+        });
+      } catch (e) {
+        const errorContent = e;
+        this.setState({
+          errorContent,
+          error: true,
+        });
+      }
     }
   }
 
@@ -150,7 +176,7 @@ class Tab extends React.Component {
 
   render() {
     let renderInfo;
-    const { githubData, loading, hasMore } = this.state;
+    const { githubData, loading, hasMore, errorContent, error } = this.state;
     const addList = loading ? "add_hide" : "add_more";
     if (githubData.length !== 0) {
       renderInfo = (
@@ -184,12 +210,17 @@ class Tab extends React.Component {
           </div>
         </InfiniteScroll>
       );
+    } else if (error) {
+      renderInfo = (
+        <div>
+          <h3 style={{ textAlign: "center", color: "red" }}>{errorContent.message}</h3>
+          <Load />
+        </div>
+      );
     } else {
       renderInfo = (
         <div>
-          <h3 style={{ textAlign: "center" }}>
-            世界名画~（github热门项目加载中）
-          </h3>
+          <h3 style={{ textAlign: "center" }}>世界名画~（github热门项目加载中）</h3>
           <Load />
         </div>
       );
@@ -230,4 +261,4 @@ class Tab extends React.Component {
   }
 }
 
-export default Tab;
+export default Popular;

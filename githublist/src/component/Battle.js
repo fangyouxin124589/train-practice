@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 
 import "../css/Battle.css";
-import GithubList from "../component/GithubList.js";
+import BattleEnd from "../component/BattleEnd.js";
+import { Router, Route } from "react-router-dom";
 
 //初始页面
 class BattleBegin extends React.Component {
@@ -14,13 +15,14 @@ class BattleBegin extends React.Component {
       isTwo: false,
       loadingOne: false,
       loadingTwo: false,
+      notFoundPlayerOne: false,
+      notFoundPlayerTwo: false,
     };
   }
   //查找Player One
   getPlayerOne = async () => {
     //得到Player One输入框的值
     const inputOne = this.refs.inputOne.value;
-    console.log(inputOne);
     //判断是否为空
     if (inputOne.match(/^[ ]*$/)) {
       alert("请确认Player One是否已输入");
@@ -35,14 +37,16 @@ class BattleBegin extends React.Component {
       const res = await axios.get(urlOne);
       //判断返回值是否为空
       if (res.data.items.length == 0) {
-        alert("Player One 未找到，请重新输入");
+        this.setState({
+          notFoundPlayerOne: true,
+        });
         this.refs.inputOne.value = "";
         return;
       }
       //返回值不为空，调用Battle里的setPlayerOne函数存值
       this.props.setPlayerOne(res.data.items[0]);
       //标识已找到
-      this.setState({ isOne: true });
+      this.setState({ isOne: true, notFoundPlayerOne: false });
     } catch (e) {}
     this.setState({ loadingOne: false });
   };
@@ -64,12 +68,14 @@ class BattleBegin extends React.Component {
     try {
       const res = await axios.get(urlTwo);
       if (res.data.items.length == 0) {
-        alert("Player Two 未找到，请重新输入");
+        this.setState({
+          notFoundPlayerTwo: true,
+        });
         this.refs.inputTwo.value = "";
         return;
       }
       this.props.setPlayerTwo(res.data.items[0]);
-      this.setState({ isTwo: true });
+      this.setState({ isTwo: true, notFoundPlayerTwo: false });
     } catch (e) {}
     this.setState({ loadingTwo: false });
   };
@@ -122,10 +128,37 @@ class BattleBegin extends React.Component {
     };
     const divCenterStyle = {
       textAlign: "center",
-      marginBottom: "20px"
+      marginBottom: "20px",
     };
     const { battleBegin, playerOne, playerTwo } = this.props;
-    const { isOne, isTwo, loadingOne, loadingTwo } = this.state;
+    const {
+      isOne,
+      isTwo,
+      loadingOne,
+      loadingTwo,
+      notFoundPlayerOne,
+      notFoundPlayerTwo,
+    } = this.state;
+    let renderInfoOne;
+    let renderInfoTwo;
+    if (notFoundPlayerOne) {
+      renderInfoOne = (
+        <p style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>
+          未找到该用户
+        </p>
+      );
+    } else {
+      renderInfoOne = <p></p>;
+    }
+    if (notFoundPlayerTwo) {
+      renderInfoTwo = (
+        <p style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>
+          未找到该用户
+        </p>
+      );
+    } else {
+      renderInfoTwo = <p></p>;
+    }
     return (
       <div className="container">
         <div style={divCenterStyle}>
@@ -165,7 +198,7 @@ class BattleBegin extends React.Component {
         </div>
         <div className="flex flex-wrap flex-space-around">
           <div className="players_content">
-            <div style={{margin:"20px 0"}}>Player One</div>
+            <div style={{ margin: "20px 0" }}>Player One</div>
             {loadingOne ? (
               <div>
                 正在查找
@@ -205,12 +238,13 @@ class BattleBegin extends React.Component {
                 >
                   S U B M I T
                 </button>
+                <div>{renderInfoOne}</div>
               </div>
             )}
           </div>
 
           <div className="players_content">
-            <div style={{margin:"20px 0"}}>Player Two</div>
+            <div style={{ margin: "20px 0" }}>Player Two</div>
             {loadingTwo ? (
               <div>
                 正在查找
@@ -250,6 +284,7 @@ class BattleBegin extends React.Component {
                 >
                   S U B M I T
                 </button>
+                <div>{renderInfoTwo}</div>
               </div>
             )}
           </div>
@@ -261,64 +296,6 @@ class BattleBegin extends React.Component {
             </button>
           </div>
         )}
-      </div>
-    );
-  }
-}
-//比较结果展示
-class BattleEnd extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const { playerOne, playerTwo, winner, resetClick } = this.props;
-    const divCenterStyle = {
-      textAlign: "center",
-    };
-    const battleCardStyle = {
-      display: "flex",
-      felxWrap: "wrap",
-      justifyContent: "space-around",
-    };
-    return (
-      <div className="container_end">
-        <div>
-          <ul style={battleCardStyle}>
-            <GithubList
-              listNum={
-                winner == playerOne.name
-                  ? "Winner"
-                  : winner == ""
-                  ? "Tie"
-                  : "Loser"
-              }
-              name={playerOne.name}
-              avatar={playerOne.owner.avatar_url}
-              starsCount={playerOne.stargazers_count}
-              forksCount={playerOne.forks_count}
-              openIssuesCount={playerOne.open_issues_count}
-            ></GithubList>
-            <GithubList
-              listNum={
-                winner == playerTwo.name
-                  ? "Winner"
-                  : winner == ""
-                  ? "Tie"
-                  : "Loser"
-              }
-              name={playerTwo.name}
-              avatar={playerTwo.owner.avatar_url}
-              starsCount={playerTwo.stargazers_count}
-              forksCount={playerTwo.forks_count}
-              openIssuesCount={playerTwo.open_issues_count}
-            ></GithubList>
-          </ul>
-        </div>
-        <div style={divCenterStyle}>
-          <button onClick={resetClick} className="reget_btn">
-            Reget
-          </button>
-        </div>
       </div>
     );
   }
@@ -349,52 +326,49 @@ class Battle extends React.Component {
   battleBegin = () => {
     //从state中取出获取到的两个项目
     const { playerOne, playerTwo } = this.state;
+    let winner = "";
     if (playerOne.stargazers_count > playerTwo.stargazers_count) {
+      winner = playerOne.name;
       this.setState({
         battle: true,
-        winner: playerOne.name,
+        winner,
       });
     } else if (playerOne.stargazers_count == playerTwo.stargazers_count) {
       this.setState({
         battle: true,
-        winner: "",
+        winner,
       });
     } else {
+      winner = playerTwo.name;
       this.setState({
         battle: true,
-        winner: playerTwo.name,
+        winner,
       });
     }
-  };
-  //重新比较
-  resetClick = () => {
-    this.setState({
-      playerOne: {},
-      playerTwo: {},
-      battle: false,
-      winner: "",
-    });
+    localStorage.setItem("playerOne", JSON.stringify(playerOne));
+    localStorage.setItem("playerTwo", JSON.stringify(playerTwo));
+    localStorage.setItem("winner", winner);
+    // this.props.history.push({
+    //   pathname: "/BattleEnd",
+    //   query: {
+    //     playerOne: { playerOne },
+    //     playerTwo: { playerTwo },
+    //     winner: { winner },
+    //   },
+    // });
+    this.props.history.push({ pathname: "/BattleEnd" });
   };
   render() {
-    const { playerOne, playerTwo, battle, winner } = this.state;
+    const { playerOne, playerTwo } = this.state;
     return (
       <div>
-        {battle ? (
-          <BattleEnd
-            playerOne={playerOne}
-            playerTwo={playerTwo}
-            winner={winner}
-            resetClick={this.resetClick}
-          ></BattleEnd>
-        ) : (
-          <BattleBegin
-            setPlayerOne={this.setPlayerOne}
-            setPlayerTwo={this.setPlayerTwo}
-            battleBegin={this.battleBegin}
-            playerOne={playerOne}
-            playerTwo={playerTwo}
-          ></BattleBegin>
-        )}
+        <BattleBegin
+          setPlayerOne={this.setPlayerOne}
+          setPlayerTwo={this.setPlayerTwo}
+          battleBegin={this.battleBegin}
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+        ></BattleBegin>
       </div>
     );
   }
