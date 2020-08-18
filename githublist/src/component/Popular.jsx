@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { HashRouter as Router, Switch, Route, NavLink } from "react-router-dom";
-import GithubList from "./GithubList";
-import Load from "./Load";
-import "../css/Popular.css";
+import GithubList from "@/component/GithubList.jsx";
+import Load from "@/component/Load.jsx";
+import "@/css/Popular.css";
 import InfiniteScroll from "react-infinite-scroller";
 
 class Popular extends React.Component {

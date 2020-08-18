@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 
-import "../css/Battle.css";
-import GithubList from "../component/GithubList.js";
+import "@/css/Battle.css";
+import GithubList from "@/component/GithubList.jsx";
 
 //比较结果展示
 class BattleEnd extends React.Component {

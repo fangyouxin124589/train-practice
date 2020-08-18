@@ -1,6 +1,6 @@
 import React from "react";
 import { HashRouter as Router, Switch, Route, NavLink } from "react-router-dom";
-import "../css/Header.css";
+import "@/css/Header.css";
 
 //头部的链接：Popular Battle
 class LinkList extends React.Component {

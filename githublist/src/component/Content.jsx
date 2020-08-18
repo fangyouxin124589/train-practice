@@ -7,13 +7,13 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import loadable from "../util/loadable.js";
+import loadable from "@/util/loadable.js";
 // import Popular from './Tab.js';
 // import Battle from './Battle.js';
 
-const Popular = loadable(() => import("./Popular.js"));
-const Battle = loadable(() => import("./Battle.js"));
-const BattleEnd = loadable(() => import("./BattleEnd.js"));
+const Popular = loadable(() => import("@/component/Popular.jsx"));
+const Battle = loadable(() => import("@/component/Battle.jsx"));
+const BattleEnd = loadable(() => import("@/component/BattleEnd.jsx"));
 
 //内容部分
 class Content extends React.Component {

@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/GithubList.css";
+import "@/css/GithubList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,

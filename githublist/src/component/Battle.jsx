@@ -2,9 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 
-import "../css/Battle.css";
-import BattleEnd from "../component/BattleEnd.js";
-import { Router, Route } from "react-router-dom";
+import "@/css/Battle.css";
 
 //初始页面
 class BattleBegin extends React.Component {
