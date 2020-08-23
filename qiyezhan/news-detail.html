@@ -90,17 +90,10 @@
           var index;
           // console.log(id);
           const res = await axios.get(
-            `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/article`
+            `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/article?id=${id}`
           );
-          console.log(res.data.data);
-          for (let i = 0; i < res.data.data.length; i++) {
-            if (id === res.data.data[i].id) {
-              index = i;
-              break;
-            }
-          }
-          this.article = res.data.data[index];
-          console.log(this.article);
+          console.log(res.data.data[0]);
+          this.article = res.data.data[0];
         },
         getID() {
           var query = window.location.search.substring(1).split("&");

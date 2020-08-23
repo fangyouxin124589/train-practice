@@ -131,7 +131,7 @@
       methods: {
         async getArticles() {
           const res = await axios.get(
-            "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articles"
+            "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articleList?page=1"
           );
           this.pageNum = Math.ceil(res.data.data.length / this.pageSize) || 1;
           for (let i = 0; i < this.pageNum; i++) {
