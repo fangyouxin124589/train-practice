@@ -47,14 +47,12 @@ class BattleEnd extends React.Component {
       textAlign: "center",
     };
     const battleCardStyle = {
-      display: "flex",
-      felxWrap: "wrap",
       justifyContent: "space-around",
     };
     return (
       <div className="container_end">
         <div>
-          <ul style={battleCardStyle}>
+          <ul style={battleCardStyle} className="d-flex flex-wrap">
             <GithubList
               listNum={
                 winner == playerOne.name

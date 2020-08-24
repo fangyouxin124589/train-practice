@@ -52,7 +52,7 @@ class GithubList extends React.Component {
     };
 
     return (
-      <div className="github-list" onClick={this.openNewPage}>
+      <div className="github-list d-flex flex-column" onClick={this.openNewPage}>
         <span className="listNumber">#{listNum}</span>
         <img src={avatar} alt="" className="listAvatar" />
         <p className="listName">{name}</p>

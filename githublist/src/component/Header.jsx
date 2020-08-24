@@ -6,7 +6,7 @@ import "@/css/Header.css";
 class LinkList extends React.Component {
   render() {
     return (
-      <ul className="header_ul">
+      <ul className="header_ul d-flex flex-row">
         <li className="header_li">
           <NavLink to="/Popular" className="navlink">
             Popular

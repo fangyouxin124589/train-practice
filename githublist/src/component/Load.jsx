@@ -8,7 +8,7 @@ class Load extends React.Component {
 
   render () {
       return (
-          <div className="load">
+          <div className="load d-flex flex-wrap flex-row">
               <div className="load_img"></div>
               <div className="load_img"></div>
               <div className="load_img"></div>

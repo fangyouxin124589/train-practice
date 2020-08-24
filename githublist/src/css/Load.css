@@ -1,8 +1,5 @@
 .load {
     width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
     justify-content: space-around;
 }
 
@@ -20,4 +17,10 @@
     background-color: rgb(250, 246, 7);
     margin: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media screen and (max-width: 680px) {
+    .load {
+        width: 100%;
+    }
 }

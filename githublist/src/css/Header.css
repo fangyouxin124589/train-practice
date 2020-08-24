@@ -10,8 +10,6 @@
 }
 
 .header_ul {
-    display: flex;
-    flex-direction: row;
     padding: 0;
 }
 

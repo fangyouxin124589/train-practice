@@ -192,7 +192,7 @@ class Popular extends React.Component {
             </div>
           }
         >
-          <div className="listContent">
+          <div className="listContent d-flex flex-wrap">
             {githubData.map((item, index) => {
               return (
                 <GithubList
@@ -228,7 +228,7 @@ class Popular extends React.Component {
     return (
       <div>
         <span className="title">Github热门项目</span>
-        <div className="tab">
+        <div className="tab d-flex flex-wrap">
           <Router>
             {this.state.tabList.map((list, index) => {
               return (
@@ -255,7 +255,7 @@ class Popular extends React.Component {
             })}
           </Router>
         </div>
-        <div className="list-content">{renderInfo}</div>
+        <div className="list-content d-flex flex-wrap">{renderInfo}</div>
       </div>
     );
   }

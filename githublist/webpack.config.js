@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { resolve } = require("path");
 module.exports = {
-  mode:'development',
+  mode: "development",
   entry: ["./src/index.js"],
   output: { filename: "bundle.js", path: path.resolve(__dirname, "dist") },
   module: {
@@ -12,6 +12,10 @@ module.exports = {
         test: /\.css$/,
         // include:[path.resolve(__dirname, 'src/styles'),/node_modules/],
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       //  { test: /\.css$/,
       //     exclude:[path.resolve(__dirname, 'src/styles'),/node_modules/],
@@ -26,9 +30,9 @@ module.exports = {
     ],
   },
   resolve: {
-    alias:{
-        '@': resolve('src')
-    }
+    alias: {
+      "@": resolve("src"),
+    },
   },
   devServer: {
     contentBase: "./dist",

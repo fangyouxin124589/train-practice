@@ -4,17 +4,17 @@
     padding: 100px 0;
 }
 
-.flex {
+/* .flex {
     display: flex;
-}
+} */
 
 .flex-nowrap {
     flex-wrap: nowrap;
 }
 
-.flex-wrap {
+/* .flex-wrap {
     flex-wrap: wrap;
-}
+} */
 
 .flex-space-around {
     justify-content: space-around;

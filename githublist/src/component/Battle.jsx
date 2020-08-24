@@ -162,7 +162,7 @@ class BattleBegin extends React.Component {
         <div style={divCenterStyle}>
           <h1>Instructions</h1>
         </div>
-        <div className="flex flex-wrap flex-space-around">
+        <div className="d-flex flex-wrap flex-space-around">
           <div style={divCenterStyle}>
             <div className="instruction_content" style={divCenterStyle}>
               Enter Two Github Users
@@ -194,7 +194,7 @@ class BattleBegin extends React.Component {
         <div style={divCenterStyle}>
           <h1 style={{ marginTop: "40px" }}>Players</h1>
         </div>
-        <div className="flex flex-wrap flex-space-around">
+        <div className="d-flex flex-wrap flex-space-around">
           <div className="players_content">
             <div style={{ margin: "20px 0" }}>Player One</div>
             {loadingOne ? (
