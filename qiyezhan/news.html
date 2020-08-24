@@ -1,171 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/faviconWeb.ico"
+      type="image/x-icon"
+    />
+    <title>漫游吧_新闻列表</title>
+    <link rel="stylesheet" href="./news.css" />
+    <script src="../vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+    <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="./styles.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="./images/faviconWeb.ico" type="image/x-icon" />
-  <title>漫游吧_新闻列表</title>
-  <link rel="stylesheet" href="./news.css" />
-  <script src="../vue.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
-  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-  <script src="./styles.js"></script>
-</head>
-
-<body>
-  <div id="app">
-    <div style="
+  <body>
+    <div id="app">
+      <div
+        style="
           width: 100%;
           height: 50px;
           background-color: #5f5d5d;
           border-bottom: 1px solid #b9b0b0;
-        ">
-      <div class="header">
-        <div class="header_left">
-          <a href="./index.html">
-            <span>漫游吧</span>
-          </a>
-        </div>
-        <div class="header_right">
-          <a href="./index.html">首页</a>
-          <a href="./news.html">新闻列表</a>
-          <a href="./about.html">关于我们</a>
-        </div>
-        <div class="header_right_app">
-          <img src="./images/菜单.png" alt="" width="30px" />
-        </div>
-      </div>
-    </div>
-    <div class="nav_app">
-      <ul>
-        <a href="index.html">
-          <li>首页</li>
-        </a>
-        <a href="news.html">
-          <li>新闻</li>
-        </a>
-        <a href="about.html">
-          <li>关于我们</li>
-        </a>
-      </ul>
-    </div>
-    <h3 class="news_title">新闻列表页</h3>
-    <div class="main">
-      <div class="news_list">
-        <div class="news_card" v-for="(article, index) in articles" :key="index" @click="readID(article.id)">
-          <div class="article_image">
-            <img :src="article.image" alt="" />
+        "
+      >
+        <div class="header">
+          <div class="header_left">
+            <img src="./images/avatar.jpg" class="avatar" />
+            <a href="./index.html">
+              <span>漫游吧</span>
+            </a>
           </div>
-          <div class="article_content">
-            <div class="arc_header">
-              <div class="arc_date_img">
-                <img src="./images/日历.png" alt="" />
-              </div>
-              <div class="arc_date">
-                <span>
-                  <!-- {{ new Date(article.updatedAt).getFullYear() + "-" + (new
-                    Date(article.updatedAt).getMonth() + 1) + "-" + new
-                    Date(article.updatedAt).getDate() }} -->
-                  {{article.year + "-" + article.month + "-" + article.day}}
-                </span>
-              </div>
-            </div>
-            <div class="arc_title">
-              <p style="margin-left: 10px;">{{article.title}}</p>
-            </div>
+          <div class="header_right">
+            <a href="./index.html">首页</a>
+            <a href="./news.html">新闻列表</a>
+            <a href="./about.html">关于我们</a>
+          </div>
+          <div class="header_right_app">
+            <img src="./images/菜单.png" alt="" width="30px" />
           </div>
         </div>
       </div>
-    </div>
-    <div class="page">
-      <div class="page_btn_list">
+      <div class="nav_app">
         <ul>
-          <li>
-            <button @click="prePage">
-              < </button> </li> <li v-for="(item,index) in totalPage">
-                <button @click="toPage(index)" :class="{pageActive: currentPage == index}" style="margin-left: 10px;">
-                  {{index + 1}}
-                </button>
-          </li>
-          <li>
-            <button @click="nextPage" style="margin-left: 10px; float: left;">
-              >
-            </button>
-          </li>
+          <a href="index.html">
+            <li>首页</li>
+          </a>
+          <a href="news.html">
+            <li>新闻</li>
+          </a>
+          <a href="about.html">
+            <li>关于我们</li>
+          </a>
         </ul>
       </div>
-    </div>
-    <div class="footer">
-      <div class="footer_top">
-        <div class="footer_top_left">
-          <p>联系方式: 15865948563</p>
-          <p>地址: 福建省福州市晋安区</p>
-          <p>email: 1586594853@qq.com</p>
+      <h3 class="news_title">新闻列表页</h3>
+      <div class="main">
+        <div class="news_list" v-if="!isLoading">
+          <div
+            class="news_card"
+            v-for="(article, index) in articles"
+            :key="index"
+            @click="readID(article.id)"
+          >
+            <div class="article_image">
+              <img :src="article.image" alt="" />
+            </div>
+            <div class="article_content">
+              <div class="arc_header">
+                <div class="arc_date_img">
+                  <img src="./images/日历.png" alt="" />
+                </div>
+                <div class="arc_date">
+                  <span>
+                    {{article.year + "-" + article.month + "-" + article.day}}
+                  </span>
+                </div>
+              </div>
+              <div class="arc_title">
+                <p style="margin-left: 10px;">{{article.title}}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="footer_top_right">
-          <img src="./images/scan.jpg" alt="" />
+        <div class="loading_list" v-else>
+          <div class="loading_card" v-for="index in 8" :key="index">
+            <img src="./images/loading.gif" alt="" />
+          </div>
+        </div>
+        <div class="page" v-show="isShow">
+          <div class="page_btn_list">
+            <ul>
+              <li>
+                <button @click="prePage">
+                  <
+                </button>
+              </li>
+              <li v-for="index in pageNum">
+                <button
+                  @click="toPage(index)"
+                  :class="{pageActive: currentPage == index}"
+                  style="margin-left: 10px;"
+                >
+                  {{index}}
+                </button>
+              </li>
+              <li>
+                <button
+                  @click="nextPage"
+                  style="margin-left: 10px; float: left;"
+                >
+                  >
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="footer_bottom">
-        <span>版权所有@方友鑫</span>
+      <div class="footer">
+        <div class="footer_main">
+          <div class="footer_main_item">
+            <img src="./images/地址.png" alt="" />
+            <span>福建省福州市晋安区</span>
+          </div>
+          <div class="footer_main_item">
+            <img src="./images/邮件.png" alt="" />
+            <span>12345678910@qq.com</span>
+          </div>
+          <div class="footer_main_item">
+            <img src="./images/手机.png" alt="" />
+            <span>12345678910</span>
+          </div>
+          <div class="footer_main_item">
+            <img src="./images/scan.jpg" alt="" />
+          </div>
+        </div>
+        <div class="footer_bottom">
+          <span>版权所有@方友鑫</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    new Vue({
-      el: "#app",
-      data() {
-        return {
-          articles: [],
-          pageNum: 1, //总页数
-          totalPage: [], //总数据
-          currentPage: 0, //当前页
-          pageSize: 4, //每页显示个数
-        };
-      },
-      created() {
-        this.getArticles();
-      },
-      methods: {
-        async getArticles() {
-          const res = await axios.get(
-            "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articleList?page=1"
-          );
-          this.pageNum = Math.ceil(res.data.data.length / this.pageSize) || 1;
-          for (let i = 0; i < this.pageNum; i++) {
-            this.totalPage[i] = res.data.data.slice(
-              this.pageSize * i,
-              this.pageSize * (i + 1)
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            articles: [],
+            pageNum: 0, //总页数
+            totalPage: [], //总数据
+            currentPage: 1, //当前页
+            pageSize: 8, //每页显示个数
+            isShow: false,
+            isLoading: true,
+          };
+        },
+        created() {
+          this.getArticles();
+        },
+        methods: {
+          async getArticles() {
+            const res = await axios.get(
+              `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articleList?page=${this.currentPage}`
             );
-            console.log(this.totalPage[i]);
-          }
-          this.articles = this.totalPage[this.currentPage];
-          // console.log(this.articles);
+            const res2 = await axios.get(
+              "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/totalArticles"
+            );
+            const articles = res2.data.data;
+            this.pageNum = Math.ceil(articles.length / this.pageSize) || 1;
+            console.log(this.pageNum);
+            this.articles = res.data.data;
+            this.isShow = true;
+            this.isLoading = false;
+            // console.log(this.articles);
+          },
+          readID(id) {
+            window.location.href = `./news-detail.html?id=${id}`;
+          },
+          async prePage() {
+            if (this.currentPage == 1) {
+              return;
+            }
+            this.currentPage--;
+            this.isLoading = true;
+            this.getArticles();
+          },
+          async nextPage() {
+            if (this.currentPage == this.pageNum) {
+              return;
+            }
+            this.currentPage++;
+            this.isLoading = true;
+            this.getArticles();
+          },
+          toPage(index) {
+            this.currentPage = index;
+            this.isLoading = true;
+            this.getArticles();
+          },
         },
-        readID(id) {
-          window.location.href = `./news-detail.html?id=${id}`;
-        },
-        prePage() {
-          if (this.currentPage == 0) {
-            return;
-          }
-          this.articles = this.totalPage[--this.currentPage];
-        },
-        nextPage() {
-          if (this.currentPage == this.pageNum - 1) {
-            return;
-          }
-          this.articles = this.totalPage[++this.currentPage];
-        },
-        toPage(index) {
-          this.currentPage = index;
-          this.articles = this.totalPage[this.currentPage];
-        },
-      },
-    });
-  </script>
-</body>
-
+      });
+    </script>
+  </body>
 </html>
