@@ -2,5 +2,5 @@ import axios from 'axios'
 
 export default {
   getProducts: () => axios.get('./data/products.json'),
-  buyProducts: (payload) => new Promise((resolve, reject) => setTimeout(() => resolve(payload), 2000)) //模拟axios.post的效果
+  buyProducts: (payload) => new Promise((resolve, reject) => setTimeout(() => resolve(payload), 2000))
 }

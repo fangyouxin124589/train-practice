@@ -11,39 +11,44 @@ const products = {
   effects: {
     *query(action, { call, put, select }) {
       const res = yield call(service_shop.getProducts);
-      yield put({
-        type: "setAllProducts",
-        payload: res.data.products,
-      });
+      //方法一
       const { products } = yield select();
+      /* //方法二
+      const sort = yield select(state => state.products.sort);
+      //方法三
+      const { now_size } = yield select(_ => _.products)
+      console.log(now_size);
+      console.log(sort); */
+      // console.log(products);
       if (products.now_size.length === 0) {
         if (products.sort === "default") {
           yield put({
-            type: "setProducts",
+            type: "getProducts",
             payload: res.data.products,
           });
           return;
         } else if (products.sort === "upper") {
           const result = new Array(...res.data.products);
           yield put({
-            type: "setProducts",
-            payload: result.sort((a, b) => a.price - b.price),
+            type: "getProducts",
+            payload: result.sort((a, b) => { return a.price - b.price}),
           });
           return;
         } else if (products.sort === "lower") {
           const result = new Array(...res.data.products);
           yield put({
-            type: "setProducts",
-            payload: result.sort((a, b) => b.price - a.price),
+            type: "getProducts",
+            payload: result.sort((a, b) => { return b.price - a.price}),
           });
           return;
         }
         yield put({
-          type: "setProducts",
+          type: "getProducts",
           payload: res.data.products,
         });
         return;
       }
+      //result: 存放尺寸筛选后的结果
       const result = res.data.products.filter((item) => {
         for (let value of products.now_size.values()) {
           if (item.availableSizes.includes(value)) {
@@ -54,62 +59,47 @@ const products = {
       });
       if (products.sort === "default") {
         yield put({
-          type: "setProducts",
+          type: "getProducts",
           payload: result,
         });
         return;
       } else if (products.sort === "upper") {
         yield put({
-          type: "setProducts",
-          payload: result.sort((a, b) => a.price - b.price),
+          type: "getProducts",
+          payload: result.sort((a, b) => { return a.price - b.price}),
         });
         return;
       } else if (products.sort === "lower") {
         yield put({
-          type: "setProducts",
-          payload: result.sort((a, b) => b.price - a.price),
+          type: "getProducts",
+          payload: result.sort((a, b) => { return b.price - a.price}),
         });
         return;
       }
-      yield put({
-        type: "setProducts",
-        payload: result,
-      });
-      return;
     },
   },
   reducers: {
-    setAllProducts: (state, { payload }) => {
-      return {
-        ...state,
-        productsTotal: payload,
-      };
-    },
-    setProducts: (state, { payload }) => {
+    getProducts: (state, { payload }) => {
       return {
         ...state,
         result: payload,
       };
     },
-    changeScreen: (state, { payload }) => {
-      if(state.now_size[0] === payload) {
-        state.now_size.splice(payload, 1)
+    changeSize: (state, { payload }) => {
+      if (state.now_size[0] === payload) {
+        // state.now_size.splice(0, 1);
+        state.now_size = [];
         return {
-          ...state
-        }
+          ...state,
+        };
       }
-      if(state.now_size.length){
-        const index = state.now_size.findIndex((v)=>{
-          return v === state.now_size[0]
-        })
-        state.now_size.splice(index, 1)
-      }
+      state.now_size = [];
       return {
         ...state,
-        now_size: [...state.now_size, payload]
-      }
+        now_size: [...state.now_size, payload],
+      };
     },
-    changeSort: (state, { payload = "default" }) => {
+    changeSort: (state, { payload }) => {
       return {
         ...state,
         sort: payload,

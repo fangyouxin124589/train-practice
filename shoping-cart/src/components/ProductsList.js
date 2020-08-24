@@ -11,14 +11,14 @@ class ProductsList extends React.Component {
       products,
       now_size,
       addToCart,
-      changeScreen,
+      changeSize,
       changeSort,
     } = this.props;
     const sizeTotal = ["XS", "S", "M", "ML", "L", "XL", "XXL"];
     const sizeList = sizeTotal.map((item, key) => (
       <Button
         size="large"
-        onClick={() => changeScreen(item)}
+        onClick={() => changeSize(item)}
         style={{ margin: 5 }}
         shape="round"
         key={key}
@@ -162,9 +162,9 @@ const mapDispatchToProps = (dispatch) => ({
         size,
       },
     }),
-  changeScreen: (size) => {
+  changeSize: (size) => {
     dispatch({
-      type: "products/changeScreen",
+      type: "products/changeSize",
       payload: size,
     });
     dispatch({

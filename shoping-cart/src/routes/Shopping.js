@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "dva";
 // import ProductsList from "../components/ProductsList";
-import ProductsList from "@/components/ProductsList"
+import ProductsList from "../components/ProductsList"
 import ShoppingCart from '../components/ShoppingCart'
 import { Layout, Button, Drawer, Badge, Row, Col } from "antd";
 import { createFromIconfontCN } from "@ant-design/icons";
 import styles from './Shopping.css'
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer} = Layout;
 const IconFont = createFromIconfontCN({
   scriptUrl: [
     "//at.alicdn.com/t/font_1788044_0dwu4guekcwr.js", // icon-javascript, icon-java, icon-shoppingcart (overrided)

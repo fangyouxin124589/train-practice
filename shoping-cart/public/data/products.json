@@ -143,7 +143,7 @@
     {
       "id": 15,
       "sku": 1015,
-      "title": "Monkey Man Black T-Shirt",
+      "title": "Monkey Black T-Shirt",
       "description": "A Fashion Black Monkey",
       "availableSizes": ["M", "ML", "L", "S"],
       "price": 119.90,
@@ -173,7 +173,7 @@
     {
       "id": 18,
       "sku": 1018,
-      "title": "Human Skeleton Brown T-Shirt",
+      "title": "Skeleton Brown T-Shirt",
       "description": "A Fashion Brown Human Skeleton",
       "availableSizes": ["M", "ML", "L", "XS", "S"],
       "price": 149.90,
