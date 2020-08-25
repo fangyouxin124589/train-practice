@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "dva";
 // import ProductsList from "../components/ProductsList";
-import ProductsList from "../components/ProductsList"
-import ShoppingCart from '../components/ShoppingCart'
+import ProductsList from "../components/ProductsList";
+import ShoppingCart from "../components/ShoppingCart";
 import { Layout, Button, Drawer, Badge, Row, Col } from "antd";
 import { createFromIconfontCN } from "@ant-design/icons";
-import styles from './Shopping.css'
+import styles from "./Shopping.css";
 
-const { Header, Content, Footer} = Layout;
+const { Header, Content, Footer } = Layout;
 const IconFont = createFromIconfontCN({
   scriptUrl: [
     "//at.alicdn.com/t/font_1788044_0dwu4guekcwr.js", // icon-javascript, icon-java, icon-shoppingcart (overrided)
@@ -15,7 +15,10 @@ const IconFont = createFromIconfontCN({
   ],
 });
 
-class Shopping extends React.Component {
+@connect(({ shopping_cart }) => ({
+  total_goods_number: shopping_cart.total_goods_number,
+}))
+export default class Shopping extends React.Component {
   state = { visible1: false, visible2: false };
 
   showDrawer1 = () => {
@@ -46,6 +49,9 @@ class Shopping extends React.Component {
     const { dispatch } = this.props;
     dispatch({
       type: "products/query",
+    });
+    dispatch({
+      type: "shopping_cart/getCart",
     });
   }
 
@@ -131,9 +137,3 @@ class Shopping extends React.Component {
     );
   }
 }
-
-const mapStateToProps = ({ shopping_cart }) => ({
-  total_goods_number: shopping_cart.total_goods_number
-})
-
-export default connect(mapStateToProps)(Shopping);

@@ -1,19 +1,36 @@
 import React from "react";
 import { connect } from "dva";
-import { Card, Button, Popover, List, Row, Col, Select } from "antd";
+import { Button, Row, Col, Select } from "antd";
 import styles from "./ProductsList.css";
+import ProductCard from "./ProductCard";
 
 const { Option } = Select;
 
-class ProductsList extends React.Component {
+@connect(({ products }) => ({
+  products: products.result,
+  now_size: products.now_size,
+}))
+export default class ProductsList extends React.Component {
   render() {
-    const {
-      products,
-      now_size,
-      addToCart,
-      changeSize,
-      changeSort,
-    } = this.props;
+    const { products, now_size, dispatch } = this.props;
+    const changeSize = (size) => {
+      dispatch({
+        type: "products/changeSize",
+        payload: size,
+      });
+      dispatch({
+        type: "products/query",
+      });
+    };
+    const changeSort = (sort) => {
+      dispatch({
+        type: "products/changeSort",
+        payload: sort,
+      });
+      dispatch({
+        type: "products/query",
+      });
+    };
     const sizeTotal = ["XS", "S", "M", "ML", "L", "XL", "XXL"];
     const sizeList = sizeTotal.map((item, key) => (
       <Button
@@ -26,60 +43,6 @@ class ProductsList extends React.Component {
       >
         {item}
       </Button>
-    ));
-    const productsList = (products || []).map((item, key) => (
-      <Card
-        hoverable 
-        className={styles.card}
-        key={key}
-        cover={<img alt={item.title + "_1.jpg"} src={"./assets/products_img/" + item.sku + "_1.jpg"}></img>}
-      >
-        <h2 style={{ textAlign: "center" }}>{item.title}</h2>
-        <hr
-          style={{
-            width: "20%",
-            backgroundColor: "orange",
-            height: "2px",
-            border: "none",
-          }}
-        />
-        <h3 style={{ textAlign: "center" }}>
-          {item.currencyFormat} <strong>{item.price.toFixed(2)}</strong>
-        </h3>
-        <Popover
-          content={
-            <List
-              size="small"
-              dataSource={item.availableSizes}
-              renderItem={(sitem) => (
-                <List.Item>
-                  <Button
-                    onClick={() => addToCart(item.id, sitem)}
-                    block
-                    style={{
-                      background: "black",
-                      color: "white",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {sitem}
-                  </Button>
-                </List.Item>
-              )}
-            />
-          }
-          title="Please to select your size"
-          trigger="click"
-        >
-          <Button
-            size="large"
-            block
-            style={{ background: "black", color: "white", fontWeight: "600" }}
-          >
-            Add to cart
-          </Button>
-        </Popover>
-      </Card>
     ));
     return (
       <Row>
@@ -141,45 +104,11 @@ class ProductsList extends React.Component {
           </div>
         </Col>
         <Col span={24}>
-          <div className={styles.products_list}>{productsList}</div>
+          <div className={styles.products_list}>
+            <ProductCard />
+          </div>
         </Col>
       </Row>
     );
   }
 }
-
-const mapStateToProps = ({ products }) => ({
-  products: products.result,
-  now_size: products.now_size,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addToCart: (id, size) =>
-    dispatch({
-      type: "shopping_cart/addToCart",
-      payload: {
-        id,
-        size,
-      },
-    }),
-  changeSize: (size) => {
-    dispatch({
-      type: "products/changeSize",
-      payload: size,
-    });
-    dispatch({
-      type: "products/query",
-    });
-  },
-  changeSort: (sort) => {
-    dispatch({
-      type: "products/changeSort",
-      payload: sort,
-    });
-    dispatch({
-      type: "products/query",
-    });
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

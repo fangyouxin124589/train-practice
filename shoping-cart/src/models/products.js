@@ -11,6 +11,11 @@ const products = {
   effects: {
     *query(action, { call, put, select }) {
       const res = yield call(service_shop.getProducts);
+      yield put({
+        type: "getAllProducts",
+        payload: res.data.products,
+      });
+
       //方法一
       const { products } = yield select();
       /* //方法二
@@ -20,6 +25,8 @@ const products = {
       console.log(now_size);
       console.log(sort); */
       // console.log(products);
+
+      //没有筛选尺寸时
       if (products.now_size.length === 0) {
         if (products.sort === "default") {
           yield put({
@@ -31,14 +38,18 @@ const products = {
           const result = new Array(...res.data.products);
           yield put({
             type: "getProducts",
-            payload: result.sort((a, b) => { return a.price - b.price}),
+            payload: result.sort((a, b) => {
+              return a.price - b.price;
+            }),
           });
           return;
         } else if (products.sort === "lower") {
           const result = new Array(...res.data.products);
           yield put({
             type: "getProducts",
-            payload: result.sort((a, b) => { return b.price - a.price}),
+            payload: result.sort((a, b) => {
+              return b.price - a.price;
+            }),
           });
           return;
         }
@@ -48,6 +59,8 @@ const products = {
         });
         return;
       }
+
+      //筛选尺寸时
       //result: 存放尺寸筛选后的结果
       const result = res.data.products.filter((item) => {
         for (let value of products.now_size.values()) {
@@ -66,19 +79,29 @@ const products = {
       } else if (products.sort === "upper") {
         yield put({
           type: "getProducts",
-          payload: result.sort((a, b) => { return a.price - b.price}),
+          payload: result.sort((a, b) => {
+            return a.price - b.price;
+          }),
         });
         return;
       } else if (products.sort === "lower") {
         yield put({
           type: "getProducts",
-          payload: result.sort((a, b) => { return b.price - a.price}),
+          payload: result.sort((a, b) => {
+            return b.price - a.price;
+          }),
         });
         return;
       }
     },
   },
   reducers: {
+    getAllProducts: (state, { payload }) => {
+      return {
+        ...state,
+        productsTotal: payload,
+      };
+    },
     getProducts: (state, { payload }) => {
       return {
         ...state,

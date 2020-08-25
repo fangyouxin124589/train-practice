@@ -1,6 +1,6 @@
 .card {
     width: 300px;
-    margin: 10px;
+    margin: 10px !important;
 }
 
 .products_list {
