@@ -3,19 +3,21 @@ import { connect } from "dva";
 import { Button, List } from "antd";
 
 @connect(({ shopping_cart, products, loading }) => ({
-  products: shopping_cart.cart_total_goods.map(({ id, size }) => ({
-    ...products.productsTotal.filter((item) => item.id === id)[0],
-    size: size,
-    goods_number: shopping_cart.cart_good_number[id + size],
-  })),
+  products: shopping_cart.cart_total_goods.map(({ id, size }) => {
+    return {
+      ...products.productsTotal.filter((item) => item.id === id)[0],
+      size: size,
+      goods_number: shopping_cart.cart_good_number[id + size],
+    };
+  }),
   subtotal: shopping_cart.cart_total_goods
-    .reduce(
-      (amount, { id, size }) =>
+    .reduce((total, { id, size }) => {
+      return (
+        total +
         products.productsTotal.filter((item) => item.id === id)[0].price *
-          shopping_cart.cart_good_number[id + size] +
-        amount,
-      0
-    )
+          shopping_cart.cart_good_number[id + size]
+      );
+    }, 0)
     .toFixed(2),
   checkingOut: loading.effects["shopping_cart/checkout"],
 }))
@@ -60,7 +62,7 @@ export default class ShoppingCart extends React.Component {
         <div style={{ height: "75%", overflow: "auto" }}>
           <List
             itemLayout="horizontal"
-            pagination={{defaultPageSize:"5"}}
+            pagination={{ defaultPageSize: "5" }}
             dataSource={products}
             renderItem={(item) => (
               <List.Item
