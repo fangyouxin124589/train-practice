@@ -38,7 +38,7 @@ body {
 }
 
 .header_left a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .header_left a span {
@@ -47,12 +47,16 @@ body {
   font-weight: 500;
 }
 
-.header_right a {
+.header_right  a {
   color: white;
   font-size: 20px;
   font-weight: 500;
-  text-decoration: none;
+  text-decoration: none !important;
   padding-left: 10px;
+}
+
+.header_right a:hover {
+  color: white !important;
 }
 
 .header_right_app > img {
