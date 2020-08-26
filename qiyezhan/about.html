@@ -50,6 +50,8 @@
     <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
     <script src="./js/jquery-3.5.1.min.js"></script>
     <script src="./styles.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <script src="./js/bootstrap.min.js"></script>
   </head>
 
   <body>
@@ -115,9 +117,19 @@
               <img src="./images/手机.png" alt="" width="40" />
               <span style="margin-left: 10px;">12345678910</span>
             </div>
+            <div class="map_content_item">
+              <button
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#myModal"
+              >
+                联系我们
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="footer">
         <div class="footer_main">
           <div class="footer_main_item">
@@ -140,6 +152,106 @@
           <span>版权所有@方友鑫</span>
         </div>
       </div>
+      <!-- /.modal -->
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        aria-hidden="true"
+      >
+        <!-- /.modal-dialog -->
+        <div class="modal-dialog">
+          <!-- /.modal-content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">联系我们</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                ×
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-row">
+                  <div class="form-group col-md-6 col-sm-6">
+                    <label for="inputFirstName">FirstName</label>
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="form-group col-md-6 col-sm-6">
+                    <label for="inputFirstName">LastName</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6 col-sm-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" />
+                  </div>
+                  <div class="form-group col-md-6 col-sm-6">
+                    <label for="inputPassword4">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="inputPassword4"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress">Address</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress2">Address 2</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress2"
+                  />
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="inputCity" />
+                  </div>
+                  <div class="form-group col-xl-4 col-lg-3 col-md-3 col-sm-3">
+                    <label for="inputState">State</label>
+                    <select id="inputState" class="form-control">
+                      <option selected>Chinese</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-xl-2 col-lg-3 col-md-3 col-sm-3">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" id="inputZip" />
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                关闭
+              </button>
+              <button type="button" class="btn btn-primary">发送</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
     </div>
   </body>
   <script type="text/javascript">
