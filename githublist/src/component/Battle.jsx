@@ -257,13 +257,13 @@ class BattleBegin extends React.Component {
                 />
                 {playerTwo.name}
                 <button onClick={this.findTwoAgain} className="delete_btn">
-                  <
+                  <i
                     className="fa fa-times-circle"
                     style={{
                       ...faIconStyle.iFontDel,
                       color: "rgb(194, 57, 42)",
                     }}
-                  ></
+                  ></i>
                 </button>
               </div>
             ) : (
