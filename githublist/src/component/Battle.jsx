@@ -5,7 +5,7 @@ import axios from "axios";
 import "@/css/Battle.css";
 
 //初始页面
-class BattleBegin extends React.Component {
+class BattleBegin extends React.Component 
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +19,6 @@ class BattleBegin extends React.Component {
   }
   //查找Player One
   getPlayerOne = async () => {
-    console.log("er");
     //得到Player One输入框的值
     const inputOne = this.refs.inputOne.value;
     //判断是否为空
