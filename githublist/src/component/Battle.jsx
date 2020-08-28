@@ -5,7 +5,7 @@ import axios from "axios";
 import "@/css/Battle.css";
 
 //初始页面
-class BattleBegin extends React.Component 
+class BattleBegin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
