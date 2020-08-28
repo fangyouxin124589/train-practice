@@ -37,7 +37,12 @@
     "lint"
   ],
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "no-undef": "error",
+      "no-restricted-globals": "error",
+      "no-unused-vars": "error"
+    }
   },
   "browserslist": {
     "production": [
