@@ -19,6 +19,7 @@ class BattleBegin extends React.Component {
   }
   //查找Player One
   getPlayerOne = async () => {
+    console.log("er");
     //得到Player One输入框的值
     const inputOne = this.refs.inputOne.value;
     //判断是否为空
