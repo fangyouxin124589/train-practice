@@ -164,15 +164,16 @@
         methods: {
           async getArticles() {
             const res = await axios.get(
-              `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articleList?page=${this.currentPage}`
+              `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articlesList?page=${this.currentPage}`
             );
-            const res2 = await axios.get(
-              "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/totalArticles"
-            );
-            const articles = res2.data.data;
-            this.pageNum = Math.ceil(articles.length / this.pageSize) || 1;
+            // const res2 = await axios.get(
+            //   "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/totalArticles"
+            // );
+            // const articles = res2.data.data;
+            console.log(res.data.articlesList);
+            this.articles = res.data.articlesList.data;
+            this.pageNum = Math.ceil(res.data.articlesList.total / this.pageSize) || 1;
             console.log(this.pageNum);
-            this.articles = res.data.data;
             this.isShow = true;
             this.isLoading = false;
             // console.log(this.articles);
