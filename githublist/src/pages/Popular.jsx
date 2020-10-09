@@ -81,14 +81,11 @@ class Popular extends React.Component {
 
   //获得数据
   async FetchGit() {
-    const initName = localStorage.getItem("name");
-    if (location.href != "http://localhost:8081/#/Popular" || initName) {
-      location.href = "#/Popular?language=" + initName;
-    }
     if (this.state.count === 0) {
       const name = localStorage.getItem("name");
       if (name) {
         try {
+          location.href = "#/Popular?language=" + name;
           const res = await axios.get(localStorage.getItem("url"));
           this.setState({
             githubData: res.data.items,
@@ -115,6 +112,7 @@ class Popular extends React.Component {
           });
         }
       } else {
+        location.href = "#/Popular"
         const { pageNum, tabUrl, githubData, pageTotal } = this.state;
         if (pageNum > pageTotal) {
           this.setState({
