@@ -1,5 +1,5 @@
 import React from "react";
-import "@/css/GithubList.css";
+import "@/css/Card.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -8,7 +8,7 @@ import {
   faExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
-class GithubList extends React.Component {
+class Card extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -79,4 +79,4 @@ class GithubList extends React.Component {
   }
 }
 
-export default GithubList;
+export default Card;

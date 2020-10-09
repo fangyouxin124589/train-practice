@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 
 import "@/css/Battle.css";
-import GithubList from "@/component/GithubList.jsx";
+import Card from "@/components/Card.jsx";
 
 //比较结果展示
 class BattleEnd extends React.Component {
@@ -32,6 +32,7 @@ class BattleEnd extends React.Component {
     const lS_winner = localStorage.getItem("winner");
     const lS_playerOne = JSON.parse(localStorage.getItem("playerOne"));
     const lS_playerTwo = JSON.parse(localStorage.getItem("playerTwo"));
+    location.href = "#/BattleEnd" + "?user1=" + lS_playerOne.name + "&user2=" + lS_playerTwo.name; 
     this.setState({
       winner: lS_winner,
       playerOne: lS_playerOne,
@@ -53,7 +54,7 @@ class BattleEnd extends React.Component {
       <div className="container_end">
         <div>
           <ul style={battleCardStyle} className="d-flex flex-wrap">
-            <GithubList
+            <Card
               listNum={
                 winner == playerOne.name
                   ? "Winner"
@@ -66,8 +67,8 @@ class BattleEnd extends React.Component {
               starsCount={playerOne.stargazers_count}
               forksCount={playerOne.forks_count}
               openIssuesCount={playerOne.open_issues_count}
-            ></GithubList>
-            <GithubList
+            ></Card>
+            <Card
               listNum={
                 winner == playerTwo.name
                   ? "Winner"
@@ -80,7 +81,7 @@ class BattleEnd extends React.Component {
               starsCount={playerTwo.stargazers_count}
               forksCount={playerTwo.forks_count}
               openIssuesCount={playerTwo.open_issues_count}
-            ></GithubList>
+            ></Card>
           </ul>
         </div>
         <div style={divCenterStyle}>

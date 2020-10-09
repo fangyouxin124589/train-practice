@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { HashRouter as Router, Switch, Route, NavLink } from "react-router-dom";
-import GithubList from "@/component/GithubList.jsx";
-import Load from "@/component/Load.jsx";
+import Card from "@/components/Card.jsx";
+import Load from "@/components/Load.jsx";
 import "@/css/Popular.css";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -49,7 +49,7 @@ class Popular extends React.Component {
       count: 0,
       loading: true,
       pageNum: 1,
-      pageTotal: 3,
+      pageTotal: 5,
       hasMore: true,
       errorContent: {},
       error: false,
@@ -81,6 +81,10 @@ class Popular extends React.Component {
 
   //获得数据
   async FetchGit() {
+    const initName = localStorage.getItem("name");
+    if (location.href != "http://localhost:8081/#/Popular" || initName) {
+      location.href = "#/Popular?language=" + initName;
+    }
     if (this.state.count === 0) {
       const name = localStorage.getItem("name");
       if (name) {
@@ -195,7 +199,7 @@ class Popular extends React.Component {
           <div className="listContent d-flex flex-wrap">
             {githubData.map((item, index) => {
               return (
-                <GithubList
+                <Card
                   key={index}
                   listNum={++index}
                   avatar={item.owner.avatar_url}
@@ -213,14 +217,18 @@ class Popular extends React.Component {
     } else if (error) {
       renderInfo = (
         <div>
-          <h3 style={{ textAlign: "center", color: "red" }}>{errorContent.message}</h3>
+          <h3 style={{ textAlign: "center", color: "red" }}>
+            {errorContent.message}
+          </h3>
           <Load />
         </div>
       );
     } else {
       renderInfo = (
         <div>
-          <h3 style={{ textAlign: "center" }}>世界名画~（github热门项目加载中）</h3>
+          <h3 style={{ textAlign: "center" }}>
+            世界名画~（github热门项目加载中）
+          </h3>
           <Load />
         </div>
       );
