@@ -28,71 +28,84 @@ const products = {
 
       //没有筛选尺寸时
       if (products.now_size.length === 0) {
-        if (products.sort === "default") {
-          yield put({
-            type: "getProducts",
-            payload: res.data.products,
-          });
-          return;
-        } else if (products.sort === "upper") {
-          const result = new Array(...res.data.products);
-          yield put({
-            type: "getProducts",
-            payload: result.sort((a, b) => {
-              return a.price - b.price;
-            }),
-          });
-          return;
-        } else if (products.sort === "lower") {
-          const result = new Array(...res.data.products);
-          yield put({
-            type: "getProducts",
-            payload: result.sort((a, b) => {
-              return b.price - a.price;
-            }),
-          });
-          return;
-        }
         yield put({
           type: "getProducts",
           payload: res.data.products,
+          sort: products.sort,
         });
-        return;
-      }
-
-      //筛选尺寸时
-      //result: 存放尺寸筛选后的结果
-      const result = res.data.products.filter((item) => {
-        for (let value of products.now_size.values()) {
-          if (item.availableSizes.includes(value)) {
-            return true;
+      } else {
+        //result: 存放尺寸筛选后的结果
+        const result = res.data.products.filter((item) => {
+          for (let value of products.now_size.values()) {
+            if (item.availableSizes.includes(value)) {
+              return true;
+            }
           }
-        }
-        return false;
-      });
-      if (products.sort === "default") {
+          return false;
+        });
         yield put({
           type: "getProducts",
           payload: result,
-        });
-        return;
-      } else if (products.sort === "upper") {
-        yield put({
-          type: "getProducts",
-          payload: result.sort((a, b) => {
-            return a.price - b.price;
-          }),
-        });
-        return;
-      } else if (products.sort === "lower") {
-        yield put({
-          type: "getProducts",
-          payload: result.sort((a, b) => {
-            return b.price - a.price;
-          }),
-        });
-        return;
+          sort: products.sort
+        })
       }
+      // if (products.now_size.length === 0) {
+      //   if (products.sort === "default") {
+      //     yield put({
+      //       type: "getProducts",
+      //       payload: res.data.products,
+      //     });
+      //     return;
+      //   } else if (products.sort === "upper") {
+      //     const result = new Array(...res.data.products);
+      //     yield put({
+      //       type: "getProducts",
+      //       payload: result.sort((a, b) => {
+      //         return a.price - b.price;
+      //       }),
+      //     });
+      //     return;
+      //   } else if (products.sort === "lower") {
+      //     const result = new Array(...res.data.products);
+      //     yield put({
+      //       type: "getProducts",
+      //       payload: result.sort((a, b) => {
+      //         return b.price - a.price;
+      //       }),
+      //     });
+      //     return;
+      //   }
+      //   yield put({
+      //     type: "getProducts",
+      //     payload: res.data.products,
+      //   });
+      //   return;
+      // }
+
+      //筛选尺寸时
+      // if (products.sort === "default") {
+      //   yield put({
+      //     type: "getProducts",
+      //     payload: result,
+      //   });
+      //   return;
+      // } else if (products.sort === "upper") {
+      //   yield put({
+      //     type: "getProducts",
+      //     payload: result.sort((a, b) => {
+      //       return a.price - b.price;
+      //     }),
+      //   });
+      //   return;
+      // } else if (products.sort === "lower") {
+      //   yield put({
+      //     type: "getProducts",
+      //     payload: result.sort((a, b) => {
+      //       return b.price - a.price;
+      //     }),
+      //   });
+      //   return;
+      // }
     },
   },
   reducers: {
@@ -102,7 +115,19 @@ const products = {
         productsTotal: payload,
       };
     },
-    getProducts: (state, { payload }) => {
+    getProducts: (state, { payload, sort }) => {
+      console.log("sort:", sort);
+      console.log("payload", payload);
+      if (sort === "upper") {
+        payload = payload.sort((a, b) => {
+          return a.price - b.price;
+        });
+      } else if (sort === "lower") {
+        payload = payload.sort((a, b) => {
+          return b.price - a.price;
+        });
+      }
+      console.log("payload", payload);
       return {
         ...state,
         result: payload,
