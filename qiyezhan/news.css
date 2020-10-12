@@ -56,8 +56,6 @@ body {
 }
 
 .header_right_app > img {
-  margin-top: 10px;
-  margin-right: 15px;
   cursor: pointer;
 }
 
@@ -299,5 +297,9 @@ body {
 
   .loading_card {
     width: 100%;
+  }
+
+  .footer_main_item {
+    width: 150px;
   }
 }

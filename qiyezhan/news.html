@@ -81,13 +81,13 @@
                 </div>
               </div>
               <div class="arc_title">
-                <p style="margin-left: 10px;">{{article.title}}</p>
+                <p style="margin-left: 10px">{{article.title}}</p>
               </div>
             </div>
           </div>
         </div>
         <div class="loading_list" v-else>
-          <div class="loading_card" v-for="index in 8" :key="index">
+          <div class="loading_card" v-for="index in loadings" :key="index">
             <img src="./images/loading.gif" alt="" />
           </div>
         </div>
@@ -95,15 +95,13 @@
           <div class="page_btn_list">
             <ul>
               <li>
-                <button @click="prePage">
-                  <
-                </button>
+                <button @click="prePage"><</button>
               </li>
               <li v-for="index in pageNum">
                 <button
                   @click="toPage(index)"
                   :class="{pageActive: currentPage == index}"
-                  style="margin-left: 10px;"
+                  style="margin-left: 10px"
                 >
                   {{index}}
                 </button>
@@ -111,7 +109,7 @@
               <li>
                 <button
                   @click="nextPage"
-                  style="margin-left: 10px; float: left;"
+                  style="margin-left: 10px; float: left"
                 >
                   >
                 </button>
@@ -156,6 +154,8 @@
             pageSize: 8, //每页显示个数
             isShow: false,
             isLoading: true,
+            loadings: 8,
+            lastLength: 0
           };
         },
         created() {
@@ -166,17 +166,14 @@
             const res = await axios.get(
               `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articlesList?page=${this.currentPage}`
             );
-            // const res2 = await axios.get(
-            //   "https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/totalArticles"
-            // );
-            // const articles = res2.data.data;
             console.log(res.data.articlesList);
-            this.articles = res.data.articlesList.data;
             this.pageNum = Math.ceil(res.data.articlesList.total / this.pageSize) || 1;
+            this.lastLength = res.data.articlesList.total % 8;
+            this.loadings = 8;
+            this.articles = res.data.articlesList.data;
             console.log(this.pageNum);
             this.isShow = true;
             this.isLoading = false;
-            // console.log(this.articles);
           },
           readID(id) {
             window.location.href = `./news-detail.html?id=${id}`;
@@ -194,11 +191,17 @@
               return;
             }
             this.currentPage++;
+            if (this.currentPage == this.pageNum) {
+              this.loadings = this.lastLength;
+            }
             this.isLoading = true;
             this.getArticles();
           },
-          toPage(index) {
+          async toPage(index) {
             this.currentPage = index;
+            if(this.currentPage == this.pageNum){
+              this.loadings = this.lastLength;
+            }
             this.isLoading = true;
             this.getArticles();
           },
