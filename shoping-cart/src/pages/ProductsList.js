@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "dva";
 import { Button, Row, Col, Select } from "antd";
 import styles from "./ProductsList.css";
-import ProductCard from "./ProductCard";
+import ProductCard from "../components/ProductCard";
 
 const { Option } = Select;
 

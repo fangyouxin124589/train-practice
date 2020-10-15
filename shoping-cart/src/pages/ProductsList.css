@@ -1,8 +1,3 @@
-.card {
-    width: 300px;
-    margin: 10px !important;
-}
-
 .products_list {
     display: flex;
     flex-wrap: wrap;

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "dva";
 import { Card, Button, Popover, List } from "antd";
-import styles from "./ProductsList.css";
+import styles from "./ProductCard.css";
 
 @connect(({ products }) => ({
   products: products.result,

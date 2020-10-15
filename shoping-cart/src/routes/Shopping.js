@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "dva";
 // import ProductsList from "../components/ProductsList";
-import ProductsList from "../components/ProductsList";
-import ShoppingCart from "../components/ShoppingCart";
+import ProductsList from "../pages/ProductsList";
+import ShoppingCart from "../pages/ShoppingCart";
 import { Layout, Button, Drawer, Badge, Row, Col } from "antd";
 import { createFromIconfontCN } from "@ant-design/icons";
 import styles from "./Shopping.css";
