@@ -106,7 +106,7 @@ body {
 .news_list {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
@@ -114,7 +114,7 @@ body {
   width: 250px;
   height: auto;
   cursor: pointer;
-  margin: 10px 0;
+  margin: 10px 10px;
   border: 1px solid #a9c9e2;
 }
 
@@ -158,7 +158,7 @@ body {
 .loading_list {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
