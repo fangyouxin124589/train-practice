@@ -94,10 +94,12 @@
 }
 
 .server_main {
-  width: 1200px;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  /* padding-left: 15px; */
+  /* padding-right: 15px; */
   /* background-color: rgb(155, 151, 151, 0.3); */
 }
 
@@ -173,6 +175,8 @@
   max-width: 1200px;
   justify-content: space-around;
   margin: 0 auto;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .footer_main_item {
@@ -212,7 +216,7 @@
   }
 
   .server_main {
-    width: 100%;
+    /* width: 100%; */
     justify-content: space-around;
   }
 

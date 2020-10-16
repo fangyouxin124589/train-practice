@@ -121,6 +121,8 @@ body {
   max-width: 1200px;
   justify-content: space-around;
   margin: 0 auto;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .footer_main_item {
