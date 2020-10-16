@@ -282,8 +282,8 @@
   }
 }
 
-@media screen and (min-width: 376px) {
+/* @media screen and (min-width: 376px) {
   .server_main {
-    /* background-color: rgb(155, 151, 151, 0.3); */
+    background-color: rgb(155, 151, 151, 0.3);
   }
-}
+} */
