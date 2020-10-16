@@ -276,6 +276,16 @@ body {
   }
 }
 
+@media screen and (max-width: 846px) {
+  .footer_main {
+    max-width: 600px;
+  }
+
+  .footer_main_item {
+    width: 220px;
+  }
+}
+
 @media screen and (min-width: 700px) {
   .header_right_app {
     display: none;

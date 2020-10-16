@@ -216,6 +216,16 @@ body {
   }
 }
 
+@media screen and (max-width: 846px) {
+  .footer_main {
+    max-width: 600px;
+  }
+
+  .footer_main_item {
+    width: 220px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .map_class {
     width: 100%;
