@@ -10,6 +10,8 @@
     />
     <title>漫游吧_新闻列表</title>
     <link rel="stylesheet" href="./news.css" />
+    <link rel="stylesheet" href="./footer.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="../vue.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
     <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
@@ -126,11 +128,11 @@
           </div>
           <div class="footer_main_item">
             <img src="./images/邮件.png" alt="" />
-            <span>12345678910@qq.com</span>
+            <span>123456@qq.com</span>
           </div>
           <div class="footer_main_item">
             <img src="./images/手机.png" alt="" />
-            <span>12345678910</span>
+            <span>123456</span>
           </div>
           <div class="footer_main_item">
             <img src="./images/scan.jpg" alt="" />
@@ -151,26 +153,27 @@
             pageNum: 0, //总页数
             totalPage: [], //总数据
             currentPage: 1, //当前页
-            pageSize: 8, //每页显示个数
+            pageSize: 12, //每页显示个数
             isShow: false,
             isLoading: true,
-            loadings: 8,
-            lastLength: 0
+            loadings: "",
+            lastLength: 0,
           };
         },
         created() {
+          this.loadings = this.pageSize;
           this.getArticles();
         },
         methods: {
           async getArticles() {
             const res = await axios.get(
-              `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articlesList?page=${this.currentPage}`
+              `https://www.fastmock.site/mock/e9270e68f2c1a1c8fcd776e7165a8ad3/articles/api/articlesList?page=${this.currentPage}&size=${this.pageSize}`
             );
             console.log(res.data.articlesList);
             this.pageNum = Math.ceil(res.data.articlesList.total / this.pageSize) || 1;
-            this.lastLength = res.data.articlesList.total % 8;
-            this.loadings = 8;
+            this.lastLength = res.data.articlesList.total % this.pageSize;
             this.articles = res.data.articlesList.data;
+            this.loadings = this.pageSize
             console.log(this.pageNum);
             this.isShow = true;
             this.isLoading = false;
